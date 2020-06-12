@@ -6,7 +6,7 @@ description: null
 documentation: https://github.com/jm1/ansible-collection-libvirt/tree/master/docs
 homepage: https://github.com/jm1/ansible-collection-libvirt
 issues: https://github.com/jm1/ansible-collection-libvirt/issues
-license: GPL-3.0-or-later
+#license: GPL-3.0-or-later
 license_file: LICENSE.md
 name: libvirt
 namespace: jm1
