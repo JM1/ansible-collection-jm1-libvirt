@@ -65,8 +65,8 @@ options:
         type: str
     backing_vol:
         description:
-            - "Name of the source backing volume to be used if taking a snapshot or clone of an existing volume."
-        required: true if state == 'absent' else false
+            - "Name of the source backing volume to be used if taking a snapshot or clone of an existing volume.
+               Required if C(state) is C(present)."
         type: str
     backing_vol_format:
         description:

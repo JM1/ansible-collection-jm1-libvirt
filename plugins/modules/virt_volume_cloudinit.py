@@ -66,8 +66,7 @@ options:
         type: str
     userdata:
         description:
-            - "cloud-init User-Data."
-        required: true if state == 'absent' else false
+            - "cloud-init User-Data. Required if C(state) is C(present)."
         type: str
     networkconfig:
         description:

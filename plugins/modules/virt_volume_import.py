@@ -50,8 +50,7 @@ options:
         type: str
     image:
         description:
-            - "Image file path (relative or absolute) or URL."
-        required: true if state == 'absent' else false
+            - "Image file path (relative or absolute) or URL. Required if C(state) is C(present)."
         type: str
     checksum:
         description:
