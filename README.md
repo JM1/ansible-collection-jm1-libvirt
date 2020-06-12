@@ -44,16 +44,16 @@ or [`virt_pool`](https://docs.ansible.com/ansible/latest/modules/virt_pool_modul
 
 Click on the name of a module or role to view that content's documentation:
 
-    - **Modules**:
-        * [virt_domain](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/virt_domain.py)
-        * [virt_pool](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/virt_pool.py)
-        * [virt_volume_cloudinit](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/virt_volume_cloudinit.py)
-        * [virt_volume_import](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/virt_volume_import.py)
-        * [virt_volume_snapshot](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/virt_volume_snapshot.py)
-    - **Module Utils**:
-        * [libvirt](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/module_utils/libvirt.py)
-    - **Roles**:
-        * [virt_server](https://github.com/JM1/ansible-collection-libvirt/blob/master/roles/virt_server/README.md)
+- **Modules**:
+    * [virt_domain](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/virt_domain.py)
+    * [virt_pool](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/virt_pool.py)
+    * [virt_volume_cloudinit](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/virt_volume_cloudinit.py)
+    * [virt_volume_import](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/virt_volume_import.py)
+    * [virt_volume_snapshot](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/virt_volume_snapshot.py)
+- **Module Utils**:
+    * [libvirt](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/module_utils/libvirt.py)
+- **Roles**:
+    * [virt_server](https://github.com/JM1/ansible-collection-libvirt/blob/master/roles/virt_server/README.md)
 
 ## Requirements and Installation
 
