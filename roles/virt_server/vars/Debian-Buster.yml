@@ -1,0 +1,49 @@
+---
+# NOTE: Synchronize changes with chapter Requirements in README.md
+
+# NOTE: Variables are sorted by name
+
+__configdrive: '{{ inventory_hostname }}_[cidata].{{ configdrive_format }}'
+
+__configdrive_filesystem: 'iso'
+
+__configdrive_format: 'raw'
+
+__domain: '{{ inventory_hostname }}'
+
+__hardware: !!null
+
+__image: '{{image_uri|urlsplit("path")|basename}}'
+
+__image_checksum: 'sha256:ab28367987f6aa05c819d8a14c876be431c76212f2da477d337d42400e04ac3a'
+
+__image_format: '{{image|splitext|last}}'
+
+__image_uri: 'https://cdimage.debian.org/cdimage/openstack/current/debian-10.4.1-20200515-openstack-amd64.qcow2'
+
+__metadata: !!null
+
+__networkconfig: !!null
+
+__pool: 'default'
+
+__pool_hardware:
+- type: dir
+- target: '/var/lib/libvirt/images'
+
+__prealloc_metadata: no
+
+__state: present
+
+__uri: 'qemu:///system'
+
+__userdata: |
+    #cloud-config
+
+__volume: '{{ inventory_hostname }}.{{ volume_format }}'
+
+__volume_capacity: '5G'
+
+__volume_cow: no
+
+__volume_format: 'qcow2'

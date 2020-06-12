@@ -1,0 +1,21 @@
+galaxy_info:
+  role_name: virt_server
+  author: Jakob Meng
+  description: Create/Delete virtual machines using libvirt and cloud-init
+  company: Hochschule Bonn-Rhein-Sieg
+  license: license (GPLv3)
+
+  min_ansible_version: 2.7
+
+  platforms:
+  # Ref.: https://galaxy.ansible.com/api/v1/platforms/
+  - name: Debian
+    versions:
+    - buster
+
+  galaxy_tags:
+  - development
+  - system
+
+dependencies:
+- jm1.common
