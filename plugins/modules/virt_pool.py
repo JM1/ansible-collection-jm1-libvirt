@@ -61,8 +61,6 @@ options:
 notes:
   - "No modifications are applied to existing pools; module is skipped if pool exists already."
 
-extends_documentation_fragment: null
-
 author: "Jakob Meng (@jm1)"
 '''
 

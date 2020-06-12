@@ -100,8 +100,6 @@ options:
 notes:
   - "No modifications are applied to existing volumes; module is skipped if volume exists already."
 
-extends_documentation_fragment: null
-
 author: "Jakob Meng (@jm1)"
 '''
 

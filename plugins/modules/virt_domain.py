@@ -67,8 +67,6 @@ options:
 notes:
   - "No modifications are applied to existing domains; module is skipped if domain exists already."
 
-extends_documentation_fragment: null
-
 author: "Jakob Meng (@jm1)"
 '''
 
