@@ -55,6 +55,11 @@ Click on the name of a module or role to view that content's documentation:
 - **Roles**:
     * [virt_server](https://github.com/JM1/ansible-collection-libvirt/blob/master/roles/virt_server/README.md)
 
+If `ansible-doc` is installed, the Module documentation might as well be printed with e.g.
+```sh
+ansible-doc jm1.libvirt.virt_domain
+```
+
 ## Requirements and Installation
 
 ### Installing necessary Python libraries
