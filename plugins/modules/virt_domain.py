@@ -82,8 +82,8 @@ RETURN = r'''
 from ansible_collections.jm1.libvirt.plugins.module_utils import libvirt as libvirt_utils
 from ansible.module_utils._text import to_native
 from ansible.module_utils.basic import AnsibleModule
-import os
 import traceback
+
 
 def create(uri,
            domain_name,
@@ -108,7 +108,7 @@ def create(uri,
                 --connect '{uri}'
                 --name '{domain_name}'
                 {virt_install_args}
-            """.replace('\n',' ').format(
+            """.replace('\n', ' ').format(
                 uri=uri,
                 domain_name=domain_name,
                 virt_install_args=' '.join(virt_install_args))
@@ -116,6 +116,7 @@ def create(uri,
         module.run_command(cmd, check_rc=True)
 
         return True
+
 
 def delete(uri,
            domain_name,
@@ -156,6 +157,7 @@ def delete(uri,
         domain.undefine()
         return True
 
+
 def core(module):
     state = module.params['state']
     uri = module.params['uri']
@@ -164,11 +166,11 @@ def core(module):
 
     if module.check_mode:
         return dict(
-            changed = False,
-            state = state,
-            uri = uri,
-            name = domain_name,
-            hardware = hardware)
+            changed=False,
+            state=state,
+            uri=uri,
+            name=domain_name,
+            hardware=hardware)
 
     if state == 'present':
         changed = create(
@@ -184,11 +186,12 @@ def core(module):
             module)
 
     return dict(
-        changed = changed,
-        state = state,
-        uri = uri,
-        name = domain_name,
-        hardware = hardware)
+        changed=changed,
+        state=state,
+        uri=uri,
+        name=domain_name,
+        hardware=hardware)
+
 
 def main():
     module = AnsibleModule(
@@ -198,12 +201,12 @@ def main():
             name=dict(required=True, type='str'),
             hardware=dict(
                 type='list',
-                default= [
-                    { 'cpu': 'host' },
-                    { 'vcpus': '2' },
-                    { 'memory': '1024' },
-                    { 'virt-type': 'kvm' },
-                    { 'graphics': 'spice,listen=none' }
+                default=[
+                    {'cpu': 'host'},
+                    {'vcpus': '2'},
+                    {'memory': '1024'},
+                    {'virt-type': 'kvm'},
+                    {'graphics': 'spice,listen=none'}
                 ])
         ),
         supports_check_mode=True,
@@ -217,6 +220,7 @@ def main():
         module.fail_json(msg=to_native(e), exception=traceback.format_exc())
     else:
         module.exit_json(**result)
+
 
 if __name__ == '__main__':
     main()

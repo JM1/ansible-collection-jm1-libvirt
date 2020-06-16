@@ -122,6 +122,7 @@ if six.PY2:
 elif six.PY3:
     import tempfile
 
+
 def create(uri,
            pool_name,
            volume_name,
@@ -187,7 +188,7 @@ def create(uri,
                     '{volume_name}'
                     '{configdrive_size}'
                     --format '{volume_format}'
-                """.replace('\n',' ').format(
+                """.replace('\n', ' ').format(
                     uri=uri,
                     pool_name=pool_name,
                     volume_name=volume_name,
@@ -204,7 +205,7 @@ def create(uri,
                     --pool '{pool_name}'
                     '{volume_name}'
                     '{configdrive_path}'
-                """.replace('\n',' ').format(
+                """.replace('\n', ' ').format(
                     uri=uri,
                     pool_name=pool_name,
                     volume_name=volume_name,
@@ -213,6 +214,7 @@ def create(uri,
             module.run_command(cmd, check_rc=True)
 
         return True
+
 
 def delete(uri,
            pool_name,
@@ -239,6 +241,7 @@ def delete(uri,
         volume.delete()
         return True
 
+
 def core(module):
     state = module.params['state']
     uri = module.params['uri']
@@ -252,16 +255,16 @@ def core(module):
 
     if module.check_mode:
         return dict(
-            changed = False,
-            state = state,
-            uri = uri,
-            pool = pool_name,
-            name = volume_name,
-            format = volume_format,
-            filesystem = volume_filesystem,
-            metadata = ci_metadata,
-            userdata = ci_userdata,
-            networkconfig = ci_networkconfig)
+            changed=False,
+            state=state,
+            uri=uri,
+            pool=pool_name,
+            name=volume_name,
+            format=volume_format,
+            filesystem=volume_filesystem,
+            metadata=ci_metadata,
+            userdata=ci_userdata,
+            networkconfig=ci_networkconfig)
 
     if state == 'present':
         changed = create(
@@ -279,16 +282,17 @@ def core(module):
             module)
 
     return dict(
-        changed = changed,
-        state = state,
-        uri = uri,
-        pool = pool_name,
-        name = volume_name,
-        format = volume_format,
-        filesystem = volume_filesystem,
-        metadata = ci_metadata,
-        userdata = ci_userdata,
-        networkconfig = ci_networkconfig)
+        changed=changed,
+        state=state,
+        uri=uri,
+        pool=pool_name,
+        name=volume_name,
+        format=volume_format,
+        filesystem=volume_filesystem,
+        metadata=ci_metadata,
+        userdata=ci_userdata,
+        networkconfig=ci_networkconfig)
+
 
 def main():
     module = AnsibleModule(
@@ -305,7 +309,7 @@ def main():
         ),
         supports_check_mode=True,
         required_if=[
-            [ 'state', 'present', [ 'userdata' ] ]
+            ['state', 'present', ['userdata']]
         ]
     )
 
@@ -320,6 +324,7 @@ def main():
         module.fail_json(msg=to_native(e), exception=traceback.format_exc())
     else:
         module.exit_json(**result)
+
 
 if __name__ == '__main__':
     main()

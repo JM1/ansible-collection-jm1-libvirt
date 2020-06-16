@@ -94,9 +94,15 @@ available:
 from ansible_collections.jm1.libvirt.plugins.module_utils import libvirt as libvirt_utils
 from ansible.module_utils._text import to_native
 from ansible.module_utils.basic import AnsibleModule
-import os
 import time
 import traceback
+
+try:
+    import libvirt
+except ImportError:
+    # error handled in libvirt_utils.try_import() below
+    pass
+
 
 def create(uri,
            pool_name,
@@ -117,7 +123,7 @@ def create(uri,
         virsh_args = libvirt_utils.to_cli_args(pool_hardware)
 
         # Remove forbidden args
-        for arg in [ '--build', '--print-xml' ]:
+        for arg in ['--build', '--print-xml']:
             virsh_args = list(filter(lambda x: x != arg, virsh_args))
 
         # Create, start and build pool
@@ -127,7 +133,7 @@ def create(uri,
                 pool-define-as
                 --name '{pool_name}'
                 {virsh_args}
-            """.replace('\n',' ').format(
+            """.replace('\n', ' ').format(
                 uri=uri,
                 pool_name=pool_name,
                 virsh_args=' '.join(virsh_args))
@@ -142,14 +148,18 @@ def create(uri,
                     pool = conn.storagePoolLookupByName(pool_name)
                     break
                 except libvirt.libvirtError as e:
-                    if e.get_error_code() != 49: # VIR_ERR_NO_STORAGE_POOL
+                    if e.get_error_code() != 49:  # VIR_ERR_NO_STORAGE_POOL
                         raise
                 time.sleep(1)
 
             # enum virStoragePoolCreateFlags {
             #     VIR_STORAGE_POOL_CREATE_NORMAL                  = 0 (0x0)         : Create the pool and perform pool build without any flags
-            #     VIR_STORAGE_POOL_CREATE_WITH_BUILD              = 1 (0x1; 1 << 0) : Create the pool and perform pool build using the VIR_STORAGE_POOL_BUILD_OVERWRITE flag. This is mutually exclusive to VIR_STORAGE_POOL_CREATE_WITH_BUILD_NO_OVERWRITE
-            #     VIR_STORAGE_POOL_CREATE_WITH_BUILD_OVERWRITE    = 2 (0x2; 1 << 1) : Create the pool and perform pool build using the VIR_STORAGE_POOL_BUILD_NO_OVERWRITE flag. This is mutually exclusive to VIR_STORAGE_POOL_CREATE_WITH_BUILD_OVERWRITE
+            #     VIR_STORAGE_POOL_CREATE_WITH_BUILD              = 1 (0x1; 1 << 0) : Create the pool and perform pool build using the
+            #                                                                         VIR_STORAGE_POOL_BUILD_OVERWRITE flag. This is mutually exclusive to
+            #                                                                         VIR_STORAGE_POOL_CREATE_WITH_BUILD_NO_OVERWRITE
+            #     VIR_STORAGE_POOL_CREATE_WITH_BUILD_OVERWRITE    = 2 (0x2; 1 << 1) : Create the pool and perform pool build using the
+            #                                                                         VIR_STORAGE_POOL_BUILD_NO_OVERWRITE flag. This is mutually exclusive to
+            #                                                                         VIR_STORAGE_POOL_CREATE_WITH_BUILD_OVERWRITE
             #     VIR_STORAGE_POOL_CREATE_WITH_BUILD_NO_OVERWRITE = 4 (0x4; 1 << 2)
             # }
             #
@@ -159,7 +169,9 @@ def create(uri,
 
             pool_state, pool_capacity, pool_allocation, pool_available = pool.info()
             return True, pool_capacity, pool_allocation, pool_available
-        except:
+
+        # bare 'except' is no issue because we reraise the exception unconditionally below
+        except:  # noqa: E722
             try:
                 # Destroy (stop) pool if creation failed
                 cmd = """
@@ -167,13 +179,16 @@ def create(uri,
                         --connect '{uri}'
                         pool-destroy
                         '{pool_name}'
-                    """.replace('\n',' ').format(uri=uri, pool_name=pool_name)
+                    """.replace('\n', ' ').format(uri=uri, pool_name=pool_name)
                 module.run_command(cmd, check_rc=True)
-            except:
+
+            # bare 'except' is no issue because we reraise the outer exception unconditionally below
+            except:  # noqa: E722
                 pass
 
             # Reraise exception from virsh vol-upload command
             raise
+
 
 def delete(uri,
            pool_name,
@@ -210,6 +225,7 @@ def delete(uri,
 
         return True, pool_capacity, pool_allocation, pool_available
 
+
 def core(module):
     state = module.params['state']
     uri = module.params['uri']
@@ -218,11 +234,11 @@ def core(module):
 
     if module.check_mode:
         return dict(
-            changed = False,
-            state = state,
-            uri = uri,
-            name = pool_name,
-            hardware = pool_hardware)
+            changed=False,
+            state=state,
+            uri=uri,
+            name=pool_name,
+            hardware=pool_hardware)
 
     if state == 'present':
         changed, pool_capacity, pool_allocation, pool_available = create(
@@ -236,22 +252,23 @@ def core(module):
             module)
 
     return dict(
-        changed = changed,
-        state = state,
-        uri = uri,
-        name = pool_name,
-        hardware = pool_hardware,
-        capacity = (int(pool_capacity) if pool_capacity is not None else None),
-        allocation = (int(pool_allocation) if pool_allocation is not None else None),
-        available = (int(pool_available) if pool_available is not None else None)
+        changed=changed,
+        state=state,
+        uri=uri,
+        name=pool_name,
+        hardware=pool_hardware,
+        capacity=(int(pool_capacity) if pool_capacity is not None else None),
+        allocation=(int(pool_allocation) if pool_allocation is not None else None),
+        available=(int(pool_available) if pool_available is not None else None)
     )
+
 
 def main():
     module = AnsibleModule(
         argument_spec=dict(
             state=dict(type='str', choices=['present', 'absent'], default='present'),
             uri=dict(default='qemu:///system'),
-            name=dict(required=True,type='str'),
+            name=dict(required=True, type='str'),
             hardware=dict(type='list')
         ),
         supports_check_mode=True,
@@ -265,6 +282,7 @@ def main():
         module.fail_json(msg=to_native(e), exception=traceback.format_exc())
     else:
         module.exit_json(**result)
+
 
 if __name__ == '__main__':
     main()

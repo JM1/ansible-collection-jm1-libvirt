@@ -127,6 +127,7 @@ from ansible.module_utils._text import to_native
 from ansible.module_utils.basic import AnsibleModule, human_to_bytes
 import traceback
 
+
 def snapshot(uri,
              pool_name,
              volume_name,
@@ -182,7 +183,7 @@ def snapshot(uri,
             if prealloc_metadata:
                 cmd += '--prealloc-metadata'
 
-            cmd = cmd.replace('\n',' ')
+            cmd = cmd.replace('\n', ' ')
 
             cmd = cmd.format(
                 uri=uri,
@@ -195,7 +196,7 @@ def snapshot(uri,
 
             rc, stdout, stderr = module.run_command(cmd, check_rc=True)
             return True, volume_capacity, volume_format
-        else: # not linked
+        else:  # not linked
             cmd = """
                 virsh
                     --connect '{uri}'
@@ -207,7 +208,7 @@ def snapshot(uri,
                     --print-xml
                 """
 
-            cmd = cmd.replace('\n',' ')
+            cmd = cmd.replace('\n', ' ')
 
             cmd = cmd.format(
                 uri=uri,
@@ -244,6 +245,7 @@ def snapshot(uri,
             volume_type, volume_capacity, volume_allocation = volume.info()
             return True, volume_capacity, volume_format
 
+
 def delete(uri,
            pool_name,
            volume_name,
@@ -273,6 +275,7 @@ def delete(uri,
         volume.delete()
         return True, volume_capacity, volume_format
 
+
 def core(module):
     state = module.params['state']
     uri = module.params['uri']
@@ -290,18 +293,17 @@ def core(module):
 
     if module.check_mode:
         return dict(
-            changed = False,
-            state = state,
-            uri = uri,
-            pool = pool_name,
-            name = volume_name,
-            capacity = volume_capacity,
-            format = volume_format,
-            backing_vol = backing_volume_name,
-            backing_vol_format = backing_volume_format,
-            linked = linked,
-            prealloc_metadata = prealloc_metadata)
-
+            changed=False,
+            state=state,
+            uri=uri,
+            pool=pool_name,
+            name=volume_name,
+            capacity=volume_capacity,
+            format=volume_format,
+            backing_vol=backing_volume_name,
+            backing_vol_format=backing_volume_format,
+            linked=linked,
+            prealloc_metadata=prealloc_metadata)
 
     if state == 'present':
         changed, volume_capacity, volume_format = snapshot(
@@ -323,17 +325,18 @@ def core(module):
             module)
 
     return dict(
-        changed = changed,
-        state = state,
-        uri = uri,
-        pool = pool_name,
-        name = volume_name,
-        capacity = volume_capacity,
-        format = volume_format,
-        backing_vol = backing_volume_name,
-        backing_vol_format = backing_volume_format,
-        linked = linked,
-        prealloc_metadata = prealloc_metadata)
+        changed=changed,
+        state=state,
+        uri=uri,
+        pool=pool_name,
+        name=volume_name,
+        capacity=volume_capacity,
+        format=volume_format,
+        backing_vol=backing_volume_name,
+        backing_vol_format=backing_volume_format,
+        linked=linked,
+        prealloc_metadata=prealloc_metadata)
+
 
 def main():
     module = AnsibleModule(
@@ -351,7 +354,7 @@ def main():
         ),
         supports_check_mode=True,
         required_if=[
-            [ 'state', 'present', [ 'backing_vol' ] ]
+            ['state', 'present', ['backing_vol']]
         ]
     )
 
@@ -363,6 +366,7 @@ def main():
         module.fail_json(msg=to_native(e), exception=traceback.format_exc())
     else:
         module.exit_json(**result)
+
 
 if __name__ == '__main__':
     main()

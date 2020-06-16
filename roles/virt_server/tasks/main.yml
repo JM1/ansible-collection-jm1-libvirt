@@ -1,5 +1,7 @@
 ---
-- include_vars: "{{ distribution_codename }}.yml"
+- name: Load variables specific to distribution versions, e.g. Debian 10 (Buster) or Ubuntu 20.04 LTS (Focal Fossa)
+  include_vars: "{{ distribution_codename }}.yml"
 
-- import_tasks: setup-Debian.yml
+- name: Load tasks specific for Debian
+  import_tasks: setup-Debian.yml
   when: ansible_distribution == 'Debian'

@@ -229,7 +229,8 @@
       name: '{{ pool }}'
       state: absent
 
-- set_fact:
+- name: Cleanup role variables
+  set_fact:
     configdrive: !!null
     configdrive_filesystem: !!null
     configdrive_format: !!null

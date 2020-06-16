@@ -127,15 +127,15 @@ if six.PY2:
 elif six.PY3:
     import tempfile
 
-def import_from_disk(
-    uri,
-    pool_name,
-    volume_name,
-    image_path,
-    image_format,
-    image_checksum,
-    image_checksum_algorithm,
-    module):
+
+def import_from_disk(uri,
+                     pool_name,
+                     volume_name,
+                     image_path,
+                     image_format,
+                     image_checksum,
+                     image_checksum_algorithm,
+                     module):
     # Create libvirt storage volume and upload image to volume
 
     if not os.path.exists(image_path):
@@ -163,7 +163,7 @@ def import_from_disk(
             '{volume_name}'
             '{image_size}'
             --format '{image_format}'
-        """.replace('\n',' ').format(
+        """.replace('\n', ' ').format(
             uri=uri,
             pool_name=pool_name,
             volume_name=volume_name,
@@ -180,14 +180,17 @@ def import_from_disk(
                 --pool '{pool_name}'
                 '{volume_name}'
                 '{image_path}'
-            """.replace('\n',' ').format(
+            """.replace('\n', ' ').format(
                 uri=uri,
                 pool_name=pool_name,
                 volume_name=volume_name,
                 image_path=image_path)
 
         module.run_command(cmd, check_rc=True)
-    except:
+
+    # bare 'except' is no issue because we reraise the exception unconditionally below
+    except:  # noqa: E722
+
         try:
             # Remove volume if upload failed
             cmd = """
@@ -196,13 +199,15 @@ def import_from_disk(
                     vol-delete
                     '{volume_name}'
                     --pool '{pool_name}'
-                """.replace('\n',' ').format(
+                """.replace('\n', ' ').format(
                     uri=uri,
                     pool_name=pool_name,
                     volume_name=volume_name)
 
             module.run_command(cmd, check_rc=True)
-        except:
+
+        # bare 'except' is no issue because we reraise the outer exception unconditionally below
+        except:  # noqa: E722
             pass
 
         # Reraise exception from virsh vol-upload command
@@ -213,6 +218,7 @@ def import_from_disk(
         volume = pool.storageVolLookupByName(volume_name)
         volume_type, volume_capacity, volume_allocation = volume.info()
         return volume_capacity
+
 
 def import_(uri,
             pool_name,
@@ -250,7 +256,7 @@ def import_(uri,
                     if not volume_name:
                         volume_name = filename
 
-                    if not filename: # or not volume_name
+                    if not filename:  # or not volume_name
                         raise ValueError('no volume name given and volume name could not be derived from image')
 
                     if not image_format:
@@ -267,7 +273,7 @@ def import_(uri,
                         return False, volume_name, volume_capacity, volume_format
 
                     # Download image
-                    local_image_path = os.path.join(dir,filename)
+                    local_image_path = os.path.join(dir, filename)
                     with open(local_image_path, 'wb') as f:
                         shutil.copyfileobj(r, f)
 
@@ -280,7 +286,7 @@ def import_(uri,
 
                 return True, volume_name, image_size, image_format
 
-        else: # not image_path_is_uri
+        else:  # not image_path_is_uri
             if not volume_name:
                 volume_name = os.path.basename(image_path)
 
@@ -308,6 +314,7 @@ def import_(uri,
                 module)
 
             return True, volume_name, volume_capacity, image_format
+
 
 def delete(uri,
            pool_name,
@@ -360,6 +367,7 @@ def delete(uri,
         volume.delete()
         return True, volume_name, volume_capacity, volume_format
 
+
 def core(module):
     state = module.params['state']
     uri = module.params['uri']
@@ -380,14 +388,14 @@ def core(module):
 
     if module.check_mode:
         return dict(
-            changed = False,
-            state = state,
-            uri = uri,
-            pool = pool_name,
-            name = volume_name,
-            image = image_path,
-            format = image_format,
-            checksum = image_checksum)
+            changed=False,
+            state=state,
+            uri=uri,
+            pool=pool_name,
+            name=volume_name,
+            image=image_path,
+            format=image_format,
+            checksum=image_checksum)
 
     if state == 'present':
         changed, volume_name, volume_capacity, volume_format = import_(
@@ -405,16 +413,17 @@ def core(module):
             module)
 
     return dict(
-        changed = changed,
-        state = state,
-        uri = uri,
-        pool = pool_name,
-        name = volume_name,
-        image = image_path,
-        format = volume_format,
-        checksum = image_checksum,
-        capacity = (int(volume_capacity) if volume_capacity is not None else None)
+        changed=changed,
+        state=state,
+        uri=uri,
+        pool=pool_name,
+        name=volume_name,
+        image=image_path,
+        format=volume_format,
+        checksum=image_checksum,
+        capacity=(int(volume_capacity) if volume_capacity is not None else None)
     )
+
 
 def main():
     module = AnsibleModule(
@@ -429,7 +438,7 @@ def main():
         ),
         supports_check_mode=True,
         required_if=[
-            [ 'state', 'present', [ 'image' ] ]
+            ['state', 'present', ['image']]
         ]
     )
 
@@ -444,6 +453,7 @@ def main():
         module.fail_json(msg=to_native(e), exception=traceback.format_exc())
     else:
         module.exit_json(**result)
+
 
 if __name__ == '__main__':
     main()

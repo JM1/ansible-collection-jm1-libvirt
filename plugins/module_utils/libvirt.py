@@ -34,12 +34,14 @@ else:
     LXML_IMPORT_ERROR = None
     HAS_LXML = True
 
+
 def try_import(module):
     if not HAS_LIBVIRT:
         module.fail_json(msg=missing_required_lib("libvirt"), exception=LIBVIRT_IMPORT_ERROR)
 
     if not HAS_LXML:
         module.fail_json(msg=missing_required_lib("lxml"), exception=LXML_IMPORT_ERROR)
+
 
 if HAS_LIBVIRT and HAS_LXML:
 
