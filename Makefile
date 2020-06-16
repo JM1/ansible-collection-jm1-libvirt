@@ -3,6 +3,14 @@
 
 .DEFAULT_GOAL := all
 
+read_yaml_key = $(shell python3 -c "import yaml; print(yaml.load(open('$(1)'))['$(2)'])")
+
+ANSIBLE_COLLECTION_NAME := $(call read_yaml_key,"galaxy.yml","name")
+ANSIBLE_COLLECTION_NAMESPACE := $(call read_yaml_key,"galaxy.yml","namespace")
+ANSIBLE_COLLECTION_VERSION := $(call read_yaml_key,"galaxy.yml","version")
+ANSIBLE_COLLECTION_FILE := $(ANSIBLE_COLLECTION_NAMESPACE)-$(ANSIBLE_COLLECTION_NAME)-$(ANSIBLE_COLLECTION_VERSION).tar.gz
+ANSIBLE_COLLECTION_DIR := build
+
 install-required-roles:
 	ansible-galaxy role install --role-file requirements.yml
 .PHONY: install-required-roles
@@ -54,5 +62,15 @@ lint-yamllint: # lint apbs und roles
 lint: lint-ansible-lint lint-flake8 lint-yamllint
 .PHONY: lint
 
-all: ;
+$(ANSIBLE_COLLECTION_DIR)/$(ANSIBLE_COLLECTION_FILE):
+	@ansible-galaxy collection build --output-path $(ANSIBLE_COLLECTION_DIR)
+
+build-collection: $(ANSIBLE_COLLECTION_DIR)/$(ANSIBLE_COLLECTION_FILE)
+.PHONY: build-collection
+
+publish-collection:
+	@ansible-galaxy collection publish $(ANSIBLE_COLLECTION_DIR)/$(ANSIBLE_COLLECTION_FILE)
+.PHONY: publish-collection
+
+all: lint build-collection
 .PHONY: all

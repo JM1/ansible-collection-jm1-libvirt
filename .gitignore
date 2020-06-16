@@ -1,0 +1,4 @@
+# Ignore generated files
+build/
+
+!.gitignore
