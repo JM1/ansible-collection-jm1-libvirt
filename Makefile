@@ -1,36 +1,47 @@
 # vim:set syntax=make:
 # kate: syntax Makefile; tab-indents on; replace-tabs off;
 
-.DEFAULT_GOAL := all
-
 read_yaml_key = $(shell python3 -c "import yaml; print(yaml.load(open('$(1)'))['$(2)'])")
 
-ANSIBLE_COLLECTION_NAME := $(call read_yaml_key,"galaxy.yml","name")
-ANSIBLE_COLLECTION_NAMESPACE := $(call read_yaml_key,"galaxy.yml","namespace")
-ANSIBLE_COLLECTION_VERSION := $(call read_yaml_key,"galaxy.yml","version")
-ANSIBLE_COLLECTION_FILE := $(ANSIBLE_COLLECTION_NAMESPACE)-$(ANSIBLE_COLLECTION_NAME)-$(ANSIBLE_COLLECTION_VERSION).tar.gz
-ANSIBLE_COLLECTION_DIR := build
+.DEFAULT_GOAL := all
 
-install-required-roles:
-	ansible-galaxy role install --role-file requirements.yml
-.PHONY: install-required-roles
+CLTN_NAME := $(call read_yaml_key,"galaxy.yml","name")
+CLTN_NAMESPACE := $(call read_yaml_key,"galaxy.yml","namespace")
+CLTN_VERSION := $(call read_yaml_key,"galaxy.yml","version")
+CLTN_FILE := $(CLTN_NAMESPACE)-$(CLTN_NAME)-$(CLTN_VERSION).tar.gz
+CLTN_DIR := build
+# NOTE: Keep lists of modules and roles in sync with README.md
+CLTN_MODULES := virt_domain virt_pool virt_volume_cloudinit virt_volume_import virt_volume_snapshot
+CLTN_ROLES := virt_server
+
+# Targets are sorted by name
+
+all: lint build-collection
+.PHONY: all
+
+$(CLTN_DIR)/$(CLTN_FILE):
+	@ansible-galaxy collection build --output-path $(CLTN_DIR)
+
+build-collection: $(CLTN_DIR)/$(CLTN_FILE)
+.PHONY: build-collection
+
+help-modules:
+	@ansible-doc --type module $(addprefix "$(CLTN_NAMESPACE).$(CLTN_NAME).",$(CLTN_MODULES))
+.PHONY: help-modules
 
 install-required-collections:
 	ansible-galaxy collection install --requirements-file requirements.yml
 .PHONY: install-required-collections
 
+install-required-roles:
+	ansible-galaxy role install --role-file requirements.yml
+.PHONY: install-required-roles
+
 install-requirements: install-required-collections install-required-roles
 .PHONY: install-requirements
 
-display-module-doc:
-	@ansible-doc \
-		--type module \
-		jm1.libvirt.virt_domain \
-		jm1.libvirt.virt_volume_snapshot \
-		jm1.libvirt.virt_volume_import \
-		jm1.libvirt.virt_volume_cloudinit \
-		jm1.libvirt.virt_pool
-.PHONY: display-module-doc
+lint: lint-ansible-lint lint-flake8 lint-yamllint
+.PHONY: lint
 
 # NOTE: Keep linting targets and its options in sync with official Ansible Galaxy linters at
 #       https://github.com/ansible/galaxy/blob/master/galaxy/importer/linters/__init__.py
@@ -38,7 +49,7 @@ display-module-doc:
 lint-ansible-lint: # lint roles
 	@ansible-lint \
 		-p \
-		'roles/virt_server/' \
+		$(addprefix "roles/",$(CLTN_ROLES)) \
 		|| { [ "$?" = 2 ] && true; }
 # ansible-lint exit code 1 is app exception, 0 is no linter err, 2 is linter err
 .PHONY: lint-ansible-lint
@@ -59,18 +70,6 @@ lint-yamllint: # lint apbs und roles
 		roles/virt_server/
 .PHONY: lint-yamllint
 
-lint: lint-ansible-lint lint-flake8 lint-yamllint
-.PHONY: lint
-
-$(ANSIBLE_COLLECTION_DIR)/$(ANSIBLE_COLLECTION_FILE):
-	@ansible-galaxy collection build --output-path $(ANSIBLE_COLLECTION_DIR)
-
-build-collection: $(ANSIBLE_COLLECTION_DIR)/$(ANSIBLE_COLLECTION_FILE)
-.PHONY: build-collection
-
 publish-collection:
-	@ansible-galaxy collection publish $(ANSIBLE_COLLECTION_DIR)/$(ANSIBLE_COLLECTION_FILE)
+	@ansible-galaxy collection publish $(CLTN_DIR)/$(CLTN_FILE)
 .PHONY: publish-collection
-
-all: lint build-collection
-.PHONY: all
