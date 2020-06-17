@@ -3,7 +3,6 @@
 This role helps to setup virtual machines using libvirt and cloud-init.
 
 *Details*
-- Installs necessary tools, e.g. `cloud-localds`, `virsh` and `virt-install`
 - Builds a libvirt storage pool for the upcoming volumes
 - Fetches a cloud image, e.g. [`debian-*-openstack-amd64.qcow2`](https://cdimage.debian.org/cdimage/openstack/current/)
   and configures it as a libvirt storage volume
