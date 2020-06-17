@@ -69,9 +69,7 @@ Python libraries `backports` (Python 2 only), `libvirt` and `lxml` are required 
 
 ## Dependencies
 
-| Name              | Description                                                                                                                    |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `jm1.common`      | Sets common facts and variables, e.g. `distribution_codename`                                                                  |
+None.
 
 ## Example Playbook
 
