@@ -55,11 +55,6 @@ Click on the name of a module or role to view that content's documentation:
 - **Roles**:
     * [virt_server](https://github.com/JM1/ansible-collection-libvirt/blob/master/roles/virt_server/README.md)
 
-If `ansible-doc` is installed, the Module documentation might as well be printed with e.g.
-```sh
-ansible-doc jm1.libvirt.virt_domain
-```
-
 ## Requirements and Installation
 
 ### Installing necessary Python libraries
@@ -136,6 +131,16 @@ https://docs.ansible.com/ansible/latest/reference_appendices/config.html#collect
 2. In there, checkout this repository (or a fork) as `libvirt`;
 3. Add the directory containing `ansible_collections` to your
    [`ANSIBLE_COLLECTIONS_PATHS`](https://docs.ansible.com/ansible/latest/reference_appendices/config.html#collections-paths).
+
+Helpful tools for developing collections are `ansible`, `ansible-doc`, `ansible-galaxy`, `ansible-lint`, `flake8`,
+`make` and `yamllint`.
+
+| OS                 | Install Instructions                                                |
+| ------------------ | ------------------------------------------------------------------- |
+| Debian 10 (Buster) | `apt install ansible ansible-doc ansible-lint flake8 make yamllint` |
+
+Have a look at the included [`Makefile`](https://github.com/JM1/ansible-collection-libvirt/blob/master/Makefile) for
+several frequently used commands, to e.g. build and lint a collection.
 
 ## More Information
 
