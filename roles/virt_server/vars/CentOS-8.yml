@@ -3,7 +3,7 @@
 
 # NOTE: Variables are sorted by name
 
-__configdrive: '{{ inventory_hostname }}_[cidata].{{ configdrive_format }}'
+__configdrive: '{{ inventory_hostname }}_[cidata].{{ configdrive_format|default(__configdrive_format, true) }}'
 
 __configdrive_filesystem: 'iso'
 
@@ -13,11 +13,11 @@ __domain: '{{ inventory_hostname }}'
 
 __hardware: !!null
 
-__image: '{{image_uri|urlsplit("path")|basename}}'
+__image: '{{image_uri|default(__image_uri, true)|urlsplit("path")|basename}}'
 
 __image_checksum: 'sha256:d8984b9baee57b127abce310def0f4c3c9d5b3cea7ea8451fc4ffcbc9935b640'
 
-__image_format: '{{image|splitext|last}}'
+__image_format: '{{image|default(__image, true)|splitext|last}}'
 
 __image_uri: 'https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-GenericCloud-8.2.2004-20200611.2.x86_64.qcow2'
 
@@ -40,7 +40,7 @@ __uri: 'qemu:///system'
 __userdata: |
     #cloud-config
 
-__volume: '{{ inventory_hostname }}.{{ volume_format }}'
+__volume: '{{ inventory_hostname }}.{{ volume_format|default(__volume_format, true) }}'
 
 __volume_capacity: '5G'
 

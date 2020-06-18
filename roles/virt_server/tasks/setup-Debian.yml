@@ -109,30 +109,6 @@
     volume: "{{ __volume }}"
   when: volume|default(None) == None
 
-- name: Cleanup role default variables
-  set_fact:
-    __configdrive: !!null
-    __configdrive_filesystem: !!null
-    __configdrive_format: !!null
-    __domain: !!null
-    __hardware: !!null
-    __image: !!null
-    __image_checksum: !!null
-    __image_format: !!null
-    __image_uri: !!null
-    __metadata: !!null
-    __networkconfig: !!null
-    __pool: !!null
-    __pool_hardware: !!null
-    __prealloc_metadata: !!null
-    __state: !!null
-    __uri: !!null
-    __userdata: !!null
-    __volume: !!null
-    __volume_capacity: !!null
-    __volume_cow: !!null
-    __volume_format: !!null
-
 - name: Fail if required vars are not set
   fail:
   when: >
