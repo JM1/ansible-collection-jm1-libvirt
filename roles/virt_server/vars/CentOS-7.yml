@@ -1,0 +1,49 @@
+---
+# NOTE: Synchronize changes with chapter Requirements in README.md
+
+# NOTE: Variables are sorted by name
+
+__configdrive: '{{ inventory_hostname }}_[cidata].{{ configdrive_format }}'
+
+__configdrive_filesystem: 'iso'
+
+__configdrive_format: 'raw'
+
+__domain: '{{ inventory_hostname }}'
+
+__hardware: !!null
+
+__image: '{{image_uri|urlsplit("path")|basename}}'
+
+__image_checksum: 'sha256:1db30c9c272fb37b00111b93dcebff16c278384755bdbe158559e9c240b73b80'
+
+__image_format: '{{image|splitext|last}}'
+
+__image_uri: 'https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-2003.qcow2'
+
+__metadata: !!null
+
+__networkconfig: !!null
+
+__pool: 'default'
+
+__pool_hardware:
+- type: dir
+- target: '/var/lib/libvirt/images'
+
+__prealloc_metadata: no
+
+__state: present
+
+__uri: 'qemu:///system'
+
+__userdata: |
+    #cloud-config
+
+__volume: '{{ inventory_hostname }}.{{ volume_format }}'
+
+__volume_capacity: '5G'
+
+__volume_cow: no
+
+__volume_format: 'qcow2'

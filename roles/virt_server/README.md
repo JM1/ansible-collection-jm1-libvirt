@@ -11,7 +11,14 @@ This role helps to setup virtual machines using libvirt and cloud-init.
 - Defines a libvirt domain (virtual machine) with both the OS storage volume and the cloud-init Config Drive attached
 
 **Tested OS images**
-- OpenStack cloud image of [`Debian 10 (Buster)` \[`amd64`\]](https://cdimage.debian.org/cdimage/openstack/current/)
+- Cloud image of [`Debian 10 (Buster)` \[`amd64`\]](https://cdimage.debian.org/cdimage/openstack/current/)
+- Generic cloud image of [`CentOS 7 (Core)` \[`amd64`\]](https://cloud.centos.org/centos/7/images/)
+- Generic cloud image of [`CentOS 8 (Core)` \[`amd64`\]](https://cloud.centos.org/centos/8/x86_64/images/)
+- Ubuntu cloud image of [`Ubuntu 20.04 LTS (Focal Fossa)` \[`amd64`\]](https://cloud-images.ubuntu.com/focal/)
+    *NOTE*: Ubuntu's cloud image of `Ubuntu 20.04 LTS (Focal Fossa)` uses [Predictable Network Interface Names](
+            https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/), hence network
+            interfaces do not get simple names such as `eth0` assigned but e.g. `enp1s0` in a UEFI QEMU/KVM machine or
+            `ens3` in a BIOS QEMU/KVM machine.
 
 Available on Ansible Galaxy in Collection [jm1.cloud](https://galaxy.ansible.com/jm1/cloud).
 
@@ -19,27 +26,39 @@ Available on Ansible Galaxy in Collection [jm1.cloud](https://galaxy.ansible.com
 
 Python libraries `backports` (Python 2 only), `libvirt` and `lxml` are required by Ansible modules `jm1.cloud.virt_*`.
 
-| OS                 | Install Instructions                       |
-| ------------------ | ------------------------------------------ |
-| Debian 10 (Buster) | `apt install python3-libvirt python3-lxml` |
+| OS                                           | Install Instructions                                                                                          |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Debian 10 (Buster)                           | `apt install python3-libvirt python3-lxml`                                                                    |
+| Red Hat Enterprise Linux (RHEL) 7 / CentOS 7 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install python-backports python-libvirt python-lxml` |
+| Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install python3-libvirt python3-lxml`                |
+| Ubuntu 20.04 LTS (Focal Fossa)               | `apt install python3-libvirt python3-lxml`                                                                    |
 
 `cloud-localds` is required by Ansible module `jm1.cloud.virt_volume_cloudinit`.
 
-| OS                 | Install Instructions            |
-| ------------------ | ------------------------------- |
-| Debian 10 (Buster) | `apt install cloud-image-utils` |
+| OS                                           | Install Instructions                                                          |
+| -------------------------------------------- | ----------------------------------------------------------------------------- |
+| Debian 10 (Buster)                           | `apt install cloud-image-utils`                                               |
+| Red Hat Enterprise Linux (RHEL) 7 / CentOS 7 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install cloud-utils` |
+| Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install cloud-utils` |
+| Ubuntu 20.04 LTS (Focal Fossa)               | `apt install cloud-image-utils`                                               |
 
 `virsh` is required by Ansible modules `jm1.cloud.virt_*`.
 
-| OS                 | Install Instructions          |
-| ------------------ | ----------------------------- |
-| Debian 10 (Buster) | `apt install libvirt-clients` |
+| OS                                           | Install Instructions                                                             |
+| -------------------------------------------- | -------------------------------------------------------------------------------- |
+| Debian 10 (Buster)                           | `apt install libvirt-clients`                                                    |
+| Red Hat Enterprise Linux (RHEL) 7 / CentOS 7 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install libvirt-client` |
+| Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install libvirt-client` |
+| Ubuntu 20.04 LTS (Focal Fossa)               | `apt install libvirt-clients`                                                    |
 
 `virt-install` is required by Ansible module `jm1.cloud.virt_domain`.
 
-| OS                 | Install Instructions   |
-| ------------------ | ---------------------- |
-| Debian 10 (Buster) | `apt install virtinst` |
+| OS                                           | Install Instructions                                                           |
+| -------------------------------------------- | ------------------------------------------------------------------------------ |
+| Debian 10 (Buster)                           | `apt install virtinst`                                                         |
+| Red Hat Enterprise Linux (RHEL) 7 / CentOS 7 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install virt-install` |
+| Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install virt-install` |
+| Ubuntu 20.04 LTS (Focal Fossa)               | `apt install virtinst`                                                         |
 
 ## Variables
 

@@ -1,8 +1,15 @@
 ---
 - name: Load variables specific to Debian and its derivatives, e.g. Debian 10 (Buster) or Ubuntu 20.04 LTS (Focal Fossa)
-  include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
-  when: ansible_distribution == 'Debian'
+  include_vars: '{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml'
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
-- name: Load tasks specific for Debian
-  import_tasks: setup-Debian.yml
-  when: ansible_distribution == 'Debian'
+- name: Load variables specific to CentOS and Red Hat Enterprise Linux
+  include_vars: '{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: Load tasks specific to OS
+  import_tasks: 'setup-{{ ansible_distribution }}.yml'
+  when: ansible_distribution == 'CentOS' or
+        ansible_distribution == 'Debian' or
+        ansible_distribution == 'Red Hat Enterprise Linux' or
+        ansible_distribution == 'Ubuntu'
