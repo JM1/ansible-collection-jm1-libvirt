@@ -1,1 +1,75 @@
 ---
+# NOTE: Synchronize changes with chapter Requirements in README.md
+
+# NOTE: Variables are sorted by name
+
+configdrive: '{{ inventory_hostname }}_[cidata].{{ configdrive_format }}'
+
+configdrive_filesystem: 'iso'
+
+configdrive_format: 'raw'
+
+domain: '{{ inventory_hostname }}'
+
+hardware: !!null
+
+image: "{{ image_uri|urlsplit('path')|basename }}"
+
+image_checksum: |-
+    {{
+    {
+        'CentOS 7': 'sha256:1db30c9c272fb37b00111b93dcebff16c278384755bdbe158559e9c240b73b80',
+        'CentOS 8': 'sha256:d8984b9baee57b127abce310def0f4c3c9d5b3cea7ea8451fc4ffcbc9935b640',
+        'Debian 10': 'sha256:00f76f2fd8e3d74c4f0de7cf97cb7b1706be4299ad44a452849e7993757a8549',
+        'Ubuntu 20.04': 'sha256:37f24aab47b9692e24f8f4dd7f8fcd86214e1a7feef23f744e1f06c377f43b13'
+    }[distribution_id|join(' ')]
+    }}
+
+image_format: |-
+    {{
+    {
+        'Ubuntu 20.04': 'qcow2'
+    }[distribution_id|join(' ')] | default((image|splitext|last)[1:])
+    }}
+
+image_uri: |-
+    {{
+    {
+        'CentOS 7': 'https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-2003.qcow2',
+        'CentOS 8': 'https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-GenericCloud-8.2.2004-20200611.2.x86_64.qcow2',
+        'Debian 10': 'https://cdimage.debian.org/cdimage/openstack/archive/10.4.2-20200608/debian-10.4.2-20200608-openstack-amd64.qcow2',
+        'Ubuntu 20.04': 'https://cloud-images.ubuntu.com/focal/20200616/focal-server-cloudimg-amd64.img'
+    }[distribution_id|join(' ')]
+    }}
+
+metadata: !!null
+
+networkconfig: !!null
+
+pool: 'default'
+
+pool_hardware:
+- type: dir
+- target: '/var/lib/libvirt/images'
+
+prealloc_metadata: no
+
+state: present
+
+uri: 'qemu:///system'
+
+userdata: |
+    #cloud-config
+
+volume: "{{ inventory_hostname }}.{{ volume_format }}"
+
+volume_capacity: |-
+    {{
+    {
+        'Ubuntu 20.04': '10G'
+    }[distribution_id|join(' ')] | default('5G')
+    }}
+
+volume_cow: no
+
+volume_format: 'qcow2'

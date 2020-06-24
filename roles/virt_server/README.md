@@ -68,27 +68,29 @@ Python libraries `backports` (Python 2 only), `libvirt` and `lxml` are required 
 | `configdrive_filesystem` | `iso`                                                        | no       | Filesystem format (vfat or iso) of Config Drive (see `man cloud-localds`)                                         |
 | `configdrive_format`     | `raw`                                                        | no       | Disk format of Config Drive storage volume (see `man qemu-image` for allowed disk formats)                        |
 | `domain`                 | `{{ inventory_hostname }}`                                   | no       | Name of the domain (virtual machine)                                                                              |
-| `hardware`               | *depends on `ansible_distribution`*                          | no       | Hardware of the domain. Accepts all two-dash (with leading `--`) command line arguments of `virt-install`, either as a list of plain arguments or as a dict key-value pairs without the leading `--` and having all dashs replaced by underscores |
+| `hardware`               | *depends on `ansible_facts['distribution']`*                 | no       | Hardware of the domain. Accepts all two-dash (with leading `--`) command line arguments of `virt-install`, either as a list of plain arguments or as a dict key-value pairs without the leading `--` and having all dashs replaced by underscores |
 | `image`                  | Filename of `image_uri`*                                     | no       | Name of the new storage volume where content of `image_uri` is copied to                                          |
-| `image_checksum`         | *depends on `ansible_distribution`*                          | no       | Image checksum                                                                                                    |
+| `image_checksum`         | *depends on `ansible_facts['distribution']`*                 | no       | Image checksum                                                                                                    |
 | `image_format`           | Fileextension of `image_uri`                                 | no       | Image file format, e.g. raw or qcow2                                                                              |
-| `image_uri`              | *depends on `ansible_distribution`*                          | no       | Image file path (relative or absolute) or URL                                                                     |
+| `image_uri`              | *depends on `ansible_facts['distribution']`*                 | no       | Image file path (relative or absolute) or URL                                                                     |
 | `metadata`               | None                                                         | no       | cloud-init Meta-Data                                                                                              |
 | `networkconfig`          | None                                                         | no       | cloud-init Network Configuration                                                                                  |
-| `pool`                   | *depends on `ansible_distribution`*                          | no       | Name or UUID of the storage pool to create the volumes in                                                         |
-| `pool_hardware`          | *depends on `ansible_distribution`*                          | no       | Hardware of the storage pool, e.g. its type. Accepts all two-dash (with leading `--`) command line arguments of `virsh pool-define-as`, either as a list of plain arguments or as a dict key-value pairs without the leading `--` and having all dashs replaced by underscores |
+| `pool`                   | *depends on `ansible_facts['distribution']`*                 | no       | Name or UUID of the storage pool to create the volumes in                                                         |
+| `pool_hardware`          | *depends on `ansible_facts['distribution']`*                 | no       | Hardware of the storage pool, e.g. its type. Accepts all two-dash (with leading `--`) command line arguments of `virsh pool-define-as`, either as a list of plain arguments or as a dict key-value pairs without the leading `--` and having all dashs replaced by underscores |
 | `prealloc_metadata`      | False                                                        | no       | Preallocate metadata (for qcow2 images which don't support full allocation)                                       |
 | `state`                  | `present`                                                    | no       | Should the volumes and domain be `present` or `absent`                                                            |
 | `uri`                    | `qemu:///system`                                             | no       | libvirt connection uri                                                                                            |
 | `userdata`               | `#cloud-config\n`                                            | no       | cloud-init User-Data                                                                                              |
 | `volume`                 | `{{ inventory_hostname }}.{{ volume_format }}`               | no       | Name of the OS storage volume                                                                                     |
-| `volume_capacity`        | *depends on `ansible_distribution`*                          | no       | Size of the OS storage volume to be created, as a scaled integer (see NOTES in `man virsh`)                       |
+| `volume_capacity`        | *depends on `ansible_facts['distribution']`*                 | no       | Size of the OS storage volume to be created, as a scaled integer (see NOTES in `man virsh`)                       |
 | `volume_cow`             | False                                                        | no       | Create a copy-on-write OS storage volume that is linked to the base `image`                                       |
 | `volume_format`          | `qcow2`                                                      | no       | Disk format of OS storage volume; raw, bochs, qcow, qcow2, vmdk, qed                                              |
 
 ## Dependencies
 
-None.
+| Name         | Description                                                                  |
+| ------------ | ---------------------------------------------------------------------------- |
+| `jm1.common` | Provides `distribution_id` fact which is used to choose OS-specific defaults |
 
 ## Example Playbook
 
