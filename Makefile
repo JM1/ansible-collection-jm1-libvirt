@@ -26,7 +26,9 @@ build-collection: $(CLTN_DIR)/$(CLTN_FILE)
 .PHONY: build-collection
 
 help-modules:
+ifneq ($(CLTN_MODULES),)
 	@ansible-doc --type module $(addprefix "$(CLTN_NAMESPACE).$(CLTN_NAME).",$(CLTN_MODULES))
+endif
 .PHONY: help-modules
 
 install-required-collections:
@@ -47,11 +49,13 @@ lint: lint-ansible-lint lint-flake8 lint-yamllint
 #       https://github.com/ansible/galaxy/blob/master/galaxy/importer/linters/__init__.py
 
 lint-ansible-lint: # lint roles
+ifneq ($(CLTN_ROLES),)
 	@ansible-lint \
 		-p \
 		$(addprefix "roles/",$(CLTN_ROLES)) \
 		|| { [ "$?" = 2 ] && true; }
 # ansible-lint exit code 1 is app exception, 0 is no linter err, 2 is linter err
+endif
 .PHONY: lint-ansible-lint
 
 lint-flake8: # lint modules, module_utils, plugins and roles
@@ -63,11 +67,13 @@ lint-flake8: # lint modules, module_utils, plugins and roles
 .PHONY: lint-flake8
 
 lint-yamllint: # lint apbs und roles
+ifneq ($(CLTN_ROLES),)
 	@yamllint \
 		-f parsable \
 		-c '.yamllint.yml' \
 		-- \
-		roles/virt_server/
+		$(addprefix "roles/",$(CLTN_ROLES))
+endif
 .PHONY: lint-yamllint
 
 publish-collection:
