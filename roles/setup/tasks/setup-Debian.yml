@@ -1,0 +1,33 @@
+---
+# NOTE: Synchronize changes with README.md
+
+# Tasks for Debian and Ubuntu have been unified in a single file because of similarities between both distributions.
+
+- name: Satisfy requirements for collection jm1.libvirt on Debian 10 (Buster)
+  when: distribution_id == ['Debian', '10']
+  jm1.pkg.meta_pkg:
+    name: "jm1-libvirt-setup"
+    version: 1
+    depends:
+    - jm1-pkg-setup
+    - cloud-image-utils
+    - libvirt-clients
+    - python-backports.tempfile
+    - python-libvirt
+    - python-lxml
+    - python3-libvirt
+    - python3-lxml
+    - virtinst
+
+- name: Satisfy requirements for collection jm1.libvirt on Ubuntu 20.04 LTS (Focal Fossa)
+  when: distribution_id == ['Ubuntu', '20.04']
+  jm1.pkg.meta_pkg:
+    name: "jm1-libvirt-setup"
+    version: 1
+    depends:
+    - jm1-pkg-setup
+    - cloud-image-utils
+    - libvirt-clients
+    - python3-libvirt
+    - python3-lxml
+    - virtinst

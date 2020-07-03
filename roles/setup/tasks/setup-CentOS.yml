@@ -1,0 +1,40 @@
+---
+# NOTE: Synchronize changes with README.md
+
+# Extra Packages for Enterprise Linux (EPEL) repository is enabled already by role jm1.pkg.setup
+
+- name: Satisfy requirements for collection jm1.libvirt on Red Hat Enterprise Linux 7 and CentOS 7
+  when: distribution_id|last == '7'
+  block:
+  - name: Install package dependencies for Red Hat Enterprise Linux 7 and CentOS 7
+    jm1.pkg.meta_pkg:
+      name: "jm1-libvirt-setup"
+      version: 1
+      depends:
+      - jm1-pkg-setup
+      - cloud-utils
+      - python-backports
+      - python-pip
+      - python-lxml
+      - libvirt-client
+      - libvirt-python
+      - virt-install
+
+  - name: Install pip dependencies for Red Hat Enterprise Linux 7 and CentOS 7
+    block:
+    - pip:
+        name: backports.tempfile
+
+- name: Satisfy requirements for collection jm1.libvirt on Red Hat Enterprise Linux 8 and CentOS 8
+  when: distribution_id|last == '8'
+  block:
+  - name: Install package dependencies for Red Hat Enterprise Linux 8 and CentOS 8
+    jm1.pkg.meta_pkg:
+      name: "jm1-libvirt-setup"
+      version: 1
+      depends:
+      - jm1-pkg-setup
+      - python3-libvirt
+      - python3-lxml
+      - libvirt-client
+      - virt-install

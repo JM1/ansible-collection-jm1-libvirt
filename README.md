@@ -13,8 +13,13 @@ with [libvirt](https://libvirt.org/) and [cloud-init](https://cloudinit.readthed
 ```yaml
 - hosts: all
   tasks:
-    - import_role:
-        name: jm1.cloud.virt_server
+    - name: Install software required by jm1.libvirt's roles and modules
+      import_role:
+        name: jm1.libvirt.setup
+
+    - name: Build storage pool, fetch cloud image, create storage volumes and define domain (virtual machine)
+      import_role:
+        name: jm1.libvirt.virt_server
       vars:
         userdata: |
             #cloud-config
@@ -53,18 +58,21 @@ Click on the name of a module or role to view that content's documentation:
 - **Module Utils**:
     * [libvirt](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/module_utils/libvirt.py)
 - **Roles**:
+    * [setup](https://github.com/JM1/ansible-collection-libvirt/blob/master/roles/setup/README.md)
     * [virt_server](https://github.com/JM1/ansible-collection-libvirt/blob/master/roles/virt_server/README.md)
 
 ## Requirements and Installation
 
-### Installing necessary Python libraries
+### Installing necessary software
 
-Content in this collection require the [Python libvirt library](https://pypi.org/project/libvirt-python/) and the
-[Python lxml library](https://pypi.org/project/lxml/) to interact with libvirt's APIs. You can install them with:
+Content in this collection requires additional tools and libraries, e.g. to interact with libvirt's APIs. You can use
+role [`jm1.libvirt.setup`](https://github.com/JM1/ansible-collection-libvirt/blob/master/roles/setup/README.md) to 
+install necessary software packages:
 
-```sh
-pip3 install libvirt-python
-pip3 install lxml
+```yaml
+- hosts: all
+  roles:
+    - jm1.libvirt.setup
 ```
 
 The exact requirements for every module and role are listed in the corresponding documentation.
@@ -85,7 +93,7 @@ You can also include it in a `requirements.yml` file and install it via
 ---
 collections:
   - name: jm1.libvirt
-    version: 2020.05.20
+    version: 2020.7.3
 ```
 
 ## Usage and Playbooks
@@ -103,6 +111,10 @@ like so:
     - jm1.libvirt
 
   tasks:
+    - name: Satisfy software requirements
+      import_role:
+        name: setup
+
     - name: Create a new libvirt domain with cloud-init
       virt_domain:
         name: 'vm.inf.h-brs.de'

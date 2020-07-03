@@ -1,0 +1,31 @@
+galaxy_info:
+  role_name: setup
+  author: Jakob Meng
+  description: Install necessary tools and libraries for roles and modules in collection jm1.libvirt
+  company: Hochschule Bonn-Rhein-Sieg
+  license: license (GPLv3)
+
+  min_ansible_version: 2.9
+
+  platforms:
+  # Ref.: https://galaxy.ansible.com/api/v1/platforms/
+  - name: Debian
+    versions:
+    - buster
+
+  - name: EL
+    versions:
+    - 7
+    - 8
+
+  - name: Ubuntu
+    versions:
+    - focal
+
+  galaxy_tags:
+  - development
+  - system
+
+dependencies:
+- jm1.common
+- jm1.pkg.setup

@@ -1,8 +1,8 @@
-# Ansible Role: jm1.cloud.virt_server
+# Ansible Role: jm1.libvirt.virt_server
 
 This role helps to setup virtual machines using libvirt and cloud-init.
 
-*Details*
+**Details**
 - Builds a libvirt storage pool for the upcoming volumes
 - Fetches a cloud image, e.g. [`debian-*-openstack-amd64.qcow2`](https://cdimage.debian.org/cdimage/openstack/current/)
   and configures it as a libvirt storage volume
@@ -20,29 +20,44 @@ This role helps to setup virtual machines using libvirt and cloud-init.
             interfaces do not get simple names such as `eth0` assigned but e.g. `enp1s0` in a UEFI QEMU/KVM machine or
             `ens3` in a BIOS QEMU/KVM machine.
 
-Available on Ansible Galaxy in Collection [jm1.cloud](https://galaxy.ansible.com/jm1/cloud).
+Available on Ansible Galaxy in Collection [jm1.libvirt](https://galaxy.ansible.com/jm1/libvirt).
 
 ## Requirements
 
-Python libraries `backports` (Python 2 only), `libvirt` and `lxml` are required by Ansible modules `jm1.cloud.virt_*`.
+**NOTE**: You may use role [`jm1.libvirt.setup`](https://github.com/JM1/ansible-collection-libvirt/blob/master/roles/setup/README.md)
+to install all necessary software packages listed below.
 
-| OS                                           | Install Instructions                                                                                          |
-| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| Debian 10 (Buster)                           | `apt install python3-libvirt python3-lxml`                                                                    |
-| Red Hat Enterprise Linux (RHEL) 7 / CentOS 7 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install python-backports python-libvirt python-lxml` |
-| Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install python3-libvirt python3-lxml`                |
-| Ubuntu 20.04 LTS (Focal Fossa)               | `apt install python3-libvirt python3-lxml`                                                                    |
+Python libraries `libvirt` and `lxml` are required by Ansible modules `jm1.libvirt.virt_*`.
 
-`cloud-localds` is required by Ansible module `jm1.cloud.virt_volume_cloudinit`.
+| OS                                           | Install Instructions                                                                           |
+| -------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Debian 10 (Buster)                           | `apt install python-libvirt python-lxml python3-libvirt python3-lxml`                          |
+| Red Hat Enterprise Linux (RHEL) 7 / CentOS 7 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install libvirt-python python-lxml`   |
+| Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install python3-libvirt python3-lxml` |
+| Ubuntu 20.04 LTS (Focal Fossa)               | `apt install python3-libvirt python3-lxml`                                                     |
+
+Python library [`backports.tempfile`](https://pypi.org/project/backports.tempfile/) (Python 2 only) is required by Ansible modules `jm1.libvirt.virt_*`.
+
+| OS                                           | Install Instructions                                       |
+| -------------------------------------------- | ---------------------------------------------------------- |
+| Debian 10 (Buster)                           | `apt install python-backports.tempfile`                    |
+| Red Hat Enterprise Linux (RHEL) 7 / CentOS 7 | `yum install python-pip && pip install backports.tempfile` |
+| Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Not required because of Python 3                           |
+| Ubuntu 20.04 LTS (Focal Fossa)               | Not required because of Python 3                           |
+
+`cloud-localds` is required by Ansible module `jm1.libvirt.virt_volume_cloudinit`.
+
+**NOTE:** `cloud-localds` is not available on `Red Hat Enterprise Linux (RHEL) 8` and `CentOS 8`,
+hence `jm1.libvirt.virt_volume_cloudinit` cannot be used on these systems!
 
 | OS                                           | Install Instructions                                                          |
 | -------------------------------------------- | ----------------------------------------------------------------------------- |
 | Debian 10 (Buster)                           | `apt install cloud-image-utils`                                               |
 | Red Hat Enterprise Linux (RHEL) 7 / CentOS 7 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install cloud-utils` |
-| Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install cloud-utils` |
+| Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | :x: Not available :x:                                                         |
 | Ubuntu 20.04 LTS (Focal Fossa)               | `apt install cloud-image-utils`                                               |
 
-`virsh` is required by Ansible modules `jm1.cloud.virt_*`.
+`virsh` is required by Ansible modules `jm1.libvirt.virt_*`.
 
 | OS                                           | Install Instructions                                                             |
 | -------------------------------------------- | -------------------------------------------------------------------------------- |
@@ -51,7 +66,7 @@ Python libraries `backports` (Python 2 only), `libvirt` and `lxml` are required 
 | Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install libvirt-client` |
 | Ubuntu 20.04 LTS (Focal Fossa)               | `apt install libvirt-clients`                                                    |
 
-`virt-install` is required by Ansible module `jm1.cloud.virt_domain`.
+`virt-install` is required by Ansible module `jm1.libvirt.virt_domain`.
 
 | OS                                           | Install Instructions                                                           |
 | -------------------------------------------- | ------------------------------------------------------------------------------ |
@@ -97,8 +112,13 @@ Python libraries `backports` (Python 2 only), `libvirt` and `lxml` are required 
 ```
 - hosts: all
   tasks:
-    - import_role:
-        name: jm1.cloud.virt_server
+    - name: Satisfy software requirements
+      import_role:
+        name: jm1.libvirt.setup
+        
+    - name: Build storage pool, fetch cloud image, create storage volumes and define domain (virtual machine)
+      import_role:
+        name: jm1.libvirt.virt_server
       vars:
         userdata: |
             #cloud-config
