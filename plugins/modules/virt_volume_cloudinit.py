@@ -123,6 +123,36 @@ elif six.PY3:
     import tempfile
 
 
+def cloud_localds(volume_format,
+                  volume_filesystem,
+                  ci_metadata_path,
+                  ci_userdata_path,
+                  ci_networkconfig_path,
+                  configdrive_path,
+                  module):
+    # TODO: Reimplement cloud-localds in Python and drop dependency on cloud-localds,
+    #       because it is not available on Red Hat Enterprise Linux 8 and CentOS 8.
+    #       Ref.: https://salsa.debian.org/cloud-team/cloud-utils/-/blob/master/bin/cloud-localds
+
+    cmd = 'cloud-localds'
+    if volume_format:
+        cmd += ' --disk-format "%s"' % volume_format
+
+    if volume_filesystem:
+        cmd += ' --filesystem "%s"' % volume_filesystem
+
+    if ci_networkconfig_path:
+        cmd += ' --network-config "%s"' % ci_networkconfig_path
+
+    cmd += ' %s' % configdrive_path
+    cmd += ' %s' % ci_userdata_path
+
+    if ci_metadata_path:
+        cmd += ' %s' % ci_metadata_path
+
+    module.run_command(cmd, check_rc=True)
+
+
 def create(uri,
            pool_name,
            volume_name,
@@ -158,23 +188,14 @@ def create(uri,
             # Create cloud-init config drive image
             configdrive_path = os.path.join(dir, 'cloud-init_config-drive.img')
 
-            cmd = 'cloud-localds'
-            if volume_format:
-                cmd += ' --disk-format "%s"' % volume_format
-
-            if volume_filesystem:
-                cmd += ' --filesystem "%s"' % volume_filesystem
-
-            if ci_networkconfig:
-                cmd += ' --network-config "%s"' % ci_networkconfig_path
-
-            cmd += ' %s' % configdrive_path
-            cmd += ' %s' % ci_userdata_path
-
-            if ci_metadata:
-                cmd += ' %s' % ci_metadata_path
-
-            module.run_command(cmd, check_rc=True)
+            cloud_localds(
+                volume_format,
+                volume_filesystem,
+                ci_metadata_path if ci_metadata else None,
+                ci_userdata_path,
+                ci_networkconfig_path if ci_networkconfig else None,
+                configdrive_path,
+                module)
 
             configdrive_size = os.path.getsize(configdrive_path)
 
