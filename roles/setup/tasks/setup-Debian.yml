@@ -7,7 +7,7 @@
   when: distribution_id == ['Debian', '10']
   jm1.pkg.meta_pkg:
     name: "jm1-libvirt-setup"
-    version: 1
+    version: "1"
     depends:
     - jm1-pkg-setup
     - cloud-image-utils
@@ -23,7 +23,7 @@
   when: distribution_id == ['Ubuntu', '20.04']
   jm1.pkg.meta_pkg:
     name: "jm1-libvirt-setup"
-    version: 1
+    version: "1"
     depends:
     - jm1-pkg-setup
     - cloud-image-utils

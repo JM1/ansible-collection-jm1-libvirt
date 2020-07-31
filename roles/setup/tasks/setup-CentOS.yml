@@ -9,7 +9,7 @@
   - name: Install package dependencies for Red Hat Enterprise Linux 7 and CentOS 7
     jm1.pkg.meta_pkg:
       name: "jm1-libvirt-setup"
-      version: 1
+      version: "1"
       depends:
       - jm1-pkg-setup
       - cloud-utils
@@ -31,7 +31,7 @@
   - name: Install package dependencies for Red Hat Enterprise Linux 8 and CentOS 8
     jm1.pkg.meta_pkg:
       name: "jm1-libvirt-setup"
-      version: 1
+      version: "1"
       depends:
       - jm1-pkg-setup
       - python3-libvirt
