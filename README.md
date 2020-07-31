@@ -169,3 +169,8 @@ several frequently used commands, to e.g. build and lint a collection.
 GNU General Public License v3.0 or later
 
 See [LICENCE.md](https://galaxy.ansible.com/jm1/libvirt/blob/master/LICENSE.md) to see the full text.
+
+## Author
+
+Jakob Meng
+@jm1 ([github](https://github.com/jm1), [galaxy](https://galaxy.ansible.com/jm1), [web](http://www.jakobmeng.de))
