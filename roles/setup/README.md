@@ -8,7 +8,7 @@ roles and tasks etc. before it executes any of them. Please make sure that all n
 installed before running Ansible. To do so, you may follow the steps described in [`README.md`](https://github.com/JM1/ansible-collection-libvirt/blob/master/README.md)
 using the provided [`requirements.yml`](https://github.com/JM1/ansible-collection-libvirt/blob/master/requirements.yml).
 
-**NOTE:** Module [`jm1.libvirt.virt_volume_cloudinit`](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/virt_volume_cloudinit.py)
+**NOTE:** Module [`jm1.libvirt.volume_cloudinit`](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/volume_cloudinit.py)
 depends on `cloud-localds`, which is not available on `Red Hat Enterprise Linux (RHEL) 8` and `CentOS 8`!
 
 **Tested OS images**

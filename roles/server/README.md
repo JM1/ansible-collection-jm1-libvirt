@@ -1,4 +1,4 @@
-# Ansible Role: jm1.libvirt.virt_server
+# Ansible Role: jm1.libvirt.server
 
 This role helps to setup virtual machines using libvirt and cloud-init.
 
@@ -27,7 +27,7 @@ Available on Ansible Galaxy in Collection [jm1.libvirt](https://galaxy.ansible.c
 **NOTE**: You may use role [`jm1.libvirt.setup`](https://github.com/JM1/ansible-collection-libvirt/blob/master/roles/setup/README.md)
 to install all necessary software packages listed below.
 
-Python libraries `libvirt` and `lxml` are required by Ansible modules `jm1.libvirt.virt_*`.
+Python libraries `libvirt` and `lxml` are required by Ansible modules `jm1.libvirt.*`.
 
 | OS                                           | Install Instructions                                                                           |
 | -------------------------------------------- | ---------------------------------------------------------------------------------------------- |
@@ -36,7 +36,7 @@ Python libraries `libvirt` and `lxml` are required by Ansible modules `jm1.libvi
 | Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install python3-libvirt python3-lxml` |
 | Ubuntu 20.04 LTS (Focal Fossa)               | `apt install python3-libvirt python3-lxml`                                                     |
 
-Python library [`backports.tempfile`](https://pypi.org/project/backports.tempfile/) (Python 2 only) is required by Ansible modules `jm1.libvirt.virt_*`.
+Python library [`backports.tempfile`](https://pypi.org/project/backports.tempfile/) (Python 2 only) is required by Ansible modules `jm1.libvirt.*`.
 
 | OS                                           | Install Instructions                                       |
 | -------------------------------------------- | ---------------------------------------------------------- |
@@ -45,10 +45,10 @@ Python library [`backports.tempfile`](https://pypi.org/project/backports.tempfil
 | Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Not required because of Python 3                           |
 | Ubuntu 20.04 LTS (Focal Fossa)               | Not required because of Python 3                           |
 
-`cloud-localds` is required by Ansible module `jm1.libvirt.virt_volume_cloudinit`.
+`cloud-localds` is required by Ansible module `jm1.libvirt.volume_cloudinit`.
 
 **NOTE:** `cloud-localds` is not available on `Red Hat Enterprise Linux (RHEL) 8` and `CentOS 8`,
-hence `jm1.libvirt.virt_volume_cloudinit` cannot be used on these systems!
+hence `jm1.libvirt.volume_cloudinit` cannot be used on these systems!
 
 | OS                                           | Install Instructions                                                          |
 | -------------------------------------------- | ----------------------------------------------------------------------------- |
@@ -57,7 +57,7 @@ hence `jm1.libvirt.virt_volume_cloudinit` cannot be used on these systems!
 | Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | :x: Not available :x:                                                         |
 | Ubuntu 20.04 LTS (Focal Fossa)               | `apt install cloud-image-utils`                                               |
 
-`virsh` is required by Ansible modules `jm1.libvirt.virt_*`.
+`virsh` is required by Ansible modules `jm1.libvirt.*`.
 
 | OS                                           | Install Instructions                                                             |
 | -------------------------------------------- | -------------------------------------------------------------------------------- |
@@ -66,7 +66,7 @@ hence `jm1.libvirt.virt_volume_cloudinit` cannot be used on these systems!
 | Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install libvirt-client` |
 | Ubuntu 20.04 LTS (Focal Fossa)               | `apt install libvirt-clients`                                                    |
 
-`virt-install` is required by Ansible module `jm1.libvirt.virt_domain`.
+`virt-install` is required by Ansible module `jm1.libvirt.domain`.
 
 | OS                                           | Install Instructions                                                           |
 | -------------------------------------------- | ------------------------------------------------------------------------------ |
@@ -118,7 +118,7 @@ hence `jm1.libvirt.virt_volume_cloudinit` cannot be used on these systems!
         
     - name: Build storage pool, fetch cloud image, create storage volumes and define domain (virtual machine)
       import_role:
-        name: jm1.libvirt.virt_server
+        name: jm1.libvirt.server
       vars:
         userdata: |
             #cloud-config

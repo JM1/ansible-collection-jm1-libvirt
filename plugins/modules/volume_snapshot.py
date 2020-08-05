@@ -17,7 +17,7 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = r'''
 ---
 
-module: virt_volume_snapshot
+module: volume_snapshot
 
 short_description: Snapshot or clone a libvirt storage volume.
 
@@ -101,13 +101,13 @@ author: "Jakob Meng (@jm1)"
 
 EXAMPLES = r'''
 - name: Create a snapshot
-  jm1.libvirt.virt_volume_snapshot:
+  jm1.libvirt.volume_snapshot:
     pool: "default"
     name: "snapshot.qcow2"
     backing_vol: "base_volume.qcow2"
 
 - name: Create a clone
-  jm1.libvirt.virt_volume_snapshot:
+  jm1.libvirt.volume_snapshot:
     pool: "default"
     name: "clone.qcow2"
     backing_vol: "base_volume.qcow2"
@@ -117,7 +117,7 @@ EXAMPLES = r'''
 RETURN = r'''
 '''
 
-# NOTE: Synchronize imports with DOCUMENTATION string above and chapter Requirements in roles/virt_server/README.md
+# NOTE: Synchronize imports with DOCUMENTATION string above and chapter Requirements in roles/server/README.md
 from ansible_collections.jm1.libvirt.plugins.module_utils import libvirt as libvirt_utils
 from ansible.module_utils._text import to_native
 from ansible.module_utils.basic import AnsibleModule, human_to_bytes

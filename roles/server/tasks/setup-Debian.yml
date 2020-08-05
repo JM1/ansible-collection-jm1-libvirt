@@ -35,14 +35,14 @@
   when: state == 'present'
   block:
   - name: Create storage pool before volume creation
-    jm1.libvirt.virt_pool:
+    jm1.libvirt.pool:
       uri: '{{ uri }}'
       name: '{{ pool }}'
       hardware: '{{ pool_hardware }}'
       state: present
 
   - name: Fetch and setup base OS image
-    jm1.libvirt.virt_volume_import:
+    jm1.libvirt.volume_import:
       uri: '{{ uri }}'
       pool: '{{ pool }}'
       name:  '{{ image }}'
@@ -52,7 +52,7 @@
       state: present
 
   - name: Create OS volume
-    jm1.libvirt.virt_volume_snapshot:
+    jm1.libvirt.volume_snapshot:
       uri: '{{ uri }}'
       pool: '{{ pool }}'
       name: '{{ volume }}'
@@ -65,7 +65,7 @@
       state: present
 
   - name: Create cloud-init config drive volume
-    jm1.libvirt.virt_volume_cloudinit:
+    jm1.libvirt.volume_cloudinit:
       uri: '{{ uri }}'
       pool: '{{ pool }}'
       name: '{{ configdrive }}'
@@ -77,7 +77,7 @@
       state: present
 
   - name: Create domain # after storage creation
-    jm1.libvirt.virt_domain:
+    jm1.libvirt.domain:
       uri: '{{ uri }}'
       name: '{{ domain }}'
       hardware: '{{ hardware }}'
@@ -87,34 +87,34 @@
   when: state == 'absent'
   block:
   - name: Delete domain before storage deletion
-    jm1.libvirt.virt_domain:
+    jm1.libvirt.domain:
       uri: '{{ uri }}'
       name: '{{ domain }}'
       state: absent
 
   - name: Delete OS volume before base OS image deletion
-    jm1.libvirt.virt_volume_snapshot:
+    jm1.libvirt.volume_snapshot:
       uri: '{{ uri }}'
       pool: '{{ pool }}'
       name: '{{ volume }}'
       state: absent
 
   - name: Delete base OS image
-    jm1.libvirt.virt_volume_import:
+    jm1.libvirt.volume_import:
       uri: '{{ uri }}'
       pool: '{{ pool }}'
       name:  '{{ image }}'
       state: absent
 
   - name: Delete cloud-init config drive volume
-    jm1.libvirt.virt_volume_cloudinit:
+    jm1.libvirt.volume_cloudinit:
       uri: '{{ uri }}'
       pool: '{{ pool }}'
       name: '{{ configdrive }}'
       state: absent
 
   - name: Delete storage pool after volume deletion
-    jm1.libvirt.virt_pool:
+    jm1.libvirt.pool:
       uri: '{{ uri }}'
       name: '{{ pool }}'
       state: absent

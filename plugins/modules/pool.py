@@ -17,7 +17,7 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = r'''
 ---
 
-module: virt_pool
+module: pool
 
 short_description: Create/Delete libvirt storage pools.
 
@@ -61,7 +61,7 @@ author: "Jakob Meng (@jm1)"
 '''
 
 EXAMPLES = r'''
-- jm1.libvirt.virt_pool
+- jm1.libvirt.pool
     name: default
     hardware: [{ 'type': 'dir', 'target': '/var/lib/libvirt/images' }]
 '''
@@ -86,7 +86,7 @@ available:
     sample: 536392192
 '''
 
-# NOTE: Synchronize imports with DOCUMENTATION string above and chapter Requirements in roles/virt_server/README.md
+# NOTE: Synchronize imports with DOCUMENTATION string above and chapter Requirements in roles/server/README.md
 from ansible_collections.jm1.libvirt.plugins.module_utils import libvirt as libvirt_utils
 from ansible.module_utils._text import to_native
 from ansible.module_utils.basic import AnsibleModule

@@ -11,8 +11,8 @@ CLTN_VERSION := $(call read_yaml_key,"galaxy.yml","version")
 CLTN_FILE := $(CLTN_NAMESPACE)-$(CLTN_NAME)-$(CLTN_VERSION).tar.gz
 CLTN_DIR := build
 # NOTE: Keep lists of modules and roles in sync with README.md
-CLTN_MODULES := virt_domain virt_pool virt_volume_cloudinit virt_volume_import virt_volume_snapshot
-CLTN_ROLES := setup virt_server
+CLTN_MODULES := domain pool volume_cloudinit volume_import volume_snapshot
+CLTN_ROLES := server setup
 
 # Targets are sorted by name
 

@@ -1,5 +1,5 @@
 galaxy_info:
-  role_name: virt_server
+  role_name: server
   author: Jakob Meng
   description: Create/Delete virtual machines using libvirt and cloud-init
   company: Hochschule Bonn-Rhein-Sieg

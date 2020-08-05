@@ -5,8 +5,8 @@ This repo hosts the [`jm1.libvirt`](https://galaxy.ansible.com/jm1/libvirt) Ansi
 The collection includes a variety of Ansible content to help automate the provisioning and maintenance of libvirt clusters.
 
 It is inspired by the [Openstack Ansible modules](https://galaxy.ansible.com/openstack/cloud),
-e.g. [`virt_domain`](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/virt_domain.py) and
-[`virt_volume_cloudinit`](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/virt_volume_cloudinit.py)
+e.g. [`jm1.libvirt.domain`](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/domain.py) and
+[`jm1.libvirt.volume_cloudinit`](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/volume_cloudinit.py)
 resemble [`os_server`](https://docs.ansible.com/ansible/latest/modules/os_server_module.html) to create virtual machines
 with [libvirt](https://libvirt.org/) and [cloud-init](https://cloudinit.readthedocs.io/). For example:
 
@@ -19,7 +19,7 @@ with [libvirt](https://libvirt.org/) and [cloud-init](https://cloudinit.readthed
 
     - name: Build storage pool, fetch cloud image, create storage volumes and define domain (virtual machine)
       import_role:
-        name: jm1.libvirt.virt_server
+        name: jm1.libvirt.server
       vars:
         userdata: |
             #cloud-config
@@ -33,7 +33,7 @@ beyond the initial application. To create libvirt domains (virtual machines), st
 [YAML lists](https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html). For example:
 
 ```yaml
-- jm1.libvirt.virt_pool
+- jm1.libvirt.pool
     name: default
     hardware:
         # Commandline arguments of 'virsh pool-define-as' as key-value pairs without
@@ -50,16 +50,16 @@ or [`virt_pool`](https://docs.ansible.com/ansible/latest/modules/virt_pool_modul
 Click on the name of a module or role to view that content's documentation:
 
 - **Modules**:
-    * [virt_domain](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/virt_domain.py)
-    * [virt_pool](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/virt_pool.py)
-    * [virt_volume_cloudinit](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/virt_volume_cloudinit.py)
-    * [virt_volume_import](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/virt_volume_import.py)
-    * [virt_volume_snapshot](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/virt_volume_snapshot.py)
+    * [domain](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/domain.py)
+    * [pool](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/pool.py)
+    * [volume_cloudinit](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/volume_cloudinit.py)
+    * [volume_import](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/volume_import.py)
+    * [volume_snapshot](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/volume_snapshot.py)
 - **Module Utils**:
     * [libvirt](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/module_utils/libvirt.py)
 - **Roles**:
+    * [server](https://github.com/JM1/ansible-collection-libvirt/blob/master/roles/server/README.md)
     * [setup](https://github.com/JM1/ansible-collection-libvirt/blob/master/roles/setup/README.md)
-    * [virt_server](https://github.com/JM1/ansible-collection-libvirt/blob/master/roles/virt_server/README.md)
 
 ## Requirements and Installation
 
@@ -98,7 +98,7 @@ collections:
 
 ## Usage and Playbooks
 
-You can either call modules by their Fully Qualified Collection Namespace (FQCN), like `jm1.libvirt.virt_domain`, or you
+You can either call modules by their Fully Qualified Collection Namespace (FQCN), like `jm1.libvirt.domain`, or you
 can call modules by their short name if you list the `jm1.libvirt` collection in the playbook's `collections`,
 like so:
 
@@ -116,7 +116,7 @@ like so:
         name: setup
 
     - name: Create a new libvirt domain with cloud-init
-      virt_domain:
+      domain:
         name: 'vm.inf.h-brs.de'
 ```
 

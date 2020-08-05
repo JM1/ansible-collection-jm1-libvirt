@@ -17,7 +17,7 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = r'''
 ---
 
-module: virt_volume_import
+module: volume_import
 
 short_description: Import volumes into libvirt storage pools.
 
@@ -71,7 +71,7 @@ author: "Jakob Meng (@jm1)"
 '''
 
 EXAMPLES = r'''
-- jm1.libvirt.virt_volume_import
+- jm1.libvirt.volume_import
     pool: 'default'
     name: 'debian-10.3.1-20200328-openstack-amd64.qcow2'
     image: 'https://cdimage.debian.org/cdimage/openstack/current/debian-10.3.1-20200328-openstack-amd64.qcow2'
@@ -99,7 +99,7 @@ format:
     sample: 'qcow2'
 '''
 
-# NOTE: Synchronize imports with DOCUMENTATION string above and chapter Requirements in roles/virt_server/README.md
+# NOTE: Synchronize imports with DOCUMENTATION string above and chapter Requirements in roles/server/README.md
 from ansible_collections.jm1.libvirt.plugins.module_utils import libvirt as libvirt_utils
 from ansible.module_utils._text import to_native
 from ansible.module_utils.basic import AnsibleModule, missing_required_lib
