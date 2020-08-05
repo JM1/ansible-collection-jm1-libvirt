@@ -21,5 +21,6 @@ options:
         type: str
 
 requirements:
-   - libvirt (e.g. in debian package python3-libvirt)
+    - libvirt (e.g. in debian package python3-libvirt)
+    - lxml (e.g. in debian package python3-lxml)
 '''

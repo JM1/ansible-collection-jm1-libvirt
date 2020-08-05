@@ -26,7 +26,6 @@ description:
        It is based on Ansible module community.libvirt.virt_pool from Maciej Delmanowski <drybjed@gmail.com>."
 
 requirements:
-   - lxml
    - backports.tempfile (python 2 only)
    - virsh (e.g. in debian package libvirt-clients)
 

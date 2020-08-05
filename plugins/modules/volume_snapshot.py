@@ -27,8 +27,7 @@ description:
        from I(backing_vol). In contrast, a clone is an independent copy of I(backing_vol) i.e. not I(linked) to it.
        It is based on Ansible module community.libvirt.virt_pool from Maciej Delmanowski <drybjed@gmail.com>."
 
-requirements:
-   - lxml
+requirements: []
 
 options:
     pool:
