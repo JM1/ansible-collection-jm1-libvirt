@@ -26,17 +26,10 @@ description:
        new volumes in libvirt storage pools. It is inspired by Ansible module openstack.cloud.os_volume."
 
 requirements:
-   - libvirt (e.g. in debian package python3-libvirt)
    - cloud-localds (e.g. in debian package cloud-image-utils)
    - virsh (e.g. in debian package libvirt-clients)
 
 options:
-    uri:
-        default: qemu:///system
-        description:
-            - "libvirt connection uri."
-        required: false
-        type: str
     pool:
         description:
             - "Name or UUID of the storage pool to create the config drive volume in."
@@ -82,6 +75,9 @@ options:
 
 notes:
   - "No modifications are applied to existing config drive volumes; module is skipped if volume exists already."
+
+extends_documentation_fragment:
+  - jm1.libvirt.libvirt
 
 author: "Jakob Meng (@jm1)"
 '''

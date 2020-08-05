@@ -26,17 +26,10 @@ description:
        It is based on Ansible module community.libvirt.virt_pool from Maciej Delmanowski <drybjed@gmail.com>."
 
 requirements:
-   - libvirt
    - lxml
    - virsh (e.g. in debian package libvirt-clients)
 
 options:
-    uri:
-        default: qemu:///system
-        description:
-            - "libvirt connection uri."
-        required: false
-        type: str
     name:
         description:
             - "Name or UUID of the storage pool."
@@ -60,6 +53,9 @@ options:
 
 notes:
   - "No modifications are applied to existing pools; module is skipped if pool exists already."
+
+extends_documentation_fragment:
+  - jm1.libvirt.libvirt
 
 author: "Jakob Meng (@jm1)"
 '''

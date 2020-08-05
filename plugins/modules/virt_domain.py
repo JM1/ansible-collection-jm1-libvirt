@@ -26,16 +26,9 @@ description:
        It is inspired by Ansible module openstack.cloud.os_server from John Dewey <john@dewey.ws> et al."
 
 requirements:
-   - libvirt (e.g. in debian package python3-libvirt)
    - virt-install (e.g. in debian package virt-inst)
 
 options:
-    uri:
-        default: qemu:///system
-        description:
-            - "libvirt connection uri."
-        required: false
-        type: str
     name:
         description:
             - "Name of the domain."
@@ -66,6 +59,9 @@ options:
 
 notes:
   - "No modifications are applied to existing domains; module is skipped if domain exists already."
+
+extends_documentation_fragment:
+  - jm1.libvirt.libvirt
 
 author: "Jakob Meng (@jm1)"
 '''
