@@ -67,7 +67,7 @@ author: "Jakob Meng (@jm1)"
 '''
 
 EXAMPLES = r'''
-- jm1.libvirt.domain
+- jm1.libvirt.domain:
     name: 'inf.h-brs.de'
 '''
 

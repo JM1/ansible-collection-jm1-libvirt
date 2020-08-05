@@ -61,7 +61,7 @@ author: "Jakob Meng (@jm1)"
 '''
 
 EXAMPLES = r'''
-- jm1.libvirt.pool
+- jm1.libvirt.pool:
     name: default
     hardware: [{ 'type': 'dir', 'target': '/var/lib/libvirt/images' }]
 '''

@@ -83,7 +83,7 @@ author: "Jakob Meng (@jm1)"
 '''
 
 EXAMPLES = r'''
-- jm1.libvirt.volume_cloudinit
+- jm1.libvirt.volume_cloudinit:
     pool: 'default'
     name: 'cloud-init_config-drive.qcow2'
     userdata: |

@@ -71,12 +71,12 @@ author: "Jakob Meng (@jm1)"
 '''
 
 EXAMPLES = r'''
-- jm1.libvirt.volume_import
+- jm1.libvirt.volume_import:
     pool: 'default'
     name: 'debian-10.3.1-20200328-openstack-amd64.qcow2'
     image: 'https://cdimage.debian.org/cdimage/openstack/current/debian-10.3.1-20200328-openstack-amd64.qcow2'
-    image_checksum: sha256:c97f8680284734535bdf988b8574e494eeda82fd6ab0720cd02aa5ee0b681263
-    image_format: 'qcow2'
+    checksum: sha256:c97f8680284734535bdf988b8574e494eeda82fd6ab0720cd02aa5ee0b681263
+    format: 'qcow2'
 '''
 
 RETURN = r'''
