@@ -1,4 +1,9 @@
 ---
+- name: Load variables to identify OS
+  import_role:
+    name: jm1.common # If Ansible raises "ERROR! the role 'jm1.common' was not found" then you might use the
+                     # ansible-galaxy and the provided requirements.yml to install all missing role dependencies.
+
 - name: Load tasks specific to OS
   include_tasks: "setup-{{ ansible_facts['distribution'] }}.yml"
   when: ansible_facts['distribution'] in [ 'CentOS', 'Debian', 'Red Hat Enterprise Linux', 'Ubuntu' ]
