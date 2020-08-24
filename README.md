@@ -17,7 +17,7 @@ with [libvirt](https://libvirt.org/) and [cloud-init](https://cloudinit.readthed
       import_role:
         name: jm1.libvirt.setup
 
-    - name: Build storage pool, fetch cloud image, create storage volumes and define domain (virtual machine)
+    - name: Fetch cloud image, create storage volumes and define domain (virtual machine)
       import_role:
         name: jm1.libvirt.server
       vars:

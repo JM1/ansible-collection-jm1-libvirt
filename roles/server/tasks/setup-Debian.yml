@@ -9,7 +9,7 @@
     image == None or image|length == 0 or
     image_format == None or image_format|length == 0 or
     image_uri == None or image_uri|length == 0 or
-    pool == None or image_uri|length == 0 or
+    pool == None or pool|length == 0 or
     state == None or state|length == 0 or
     uri == None or uri|length == 0 or
     userdata == None or userdata|length == 0 or
@@ -31,16 +31,9 @@
     configdrive == volume or
     image == volume
 
-- name: Create domain, storage volumes and storage pool
+- name: Create storage volumes and domain
   when: state == 'present'
   block:
-  - name: Create storage pool before volume creation
-    jm1.libvirt.pool:
-      uri: '{{ uri }}'
-      name: '{{ pool }}'
-      hardware: '{{ pool_hardware }}'
-      state: present
-
   - name: Fetch and setup base OS image
     jm1.libvirt.volume_import:
       uri: '{{ uri }}'
@@ -83,7 +76,7 @@
       hardware: '{{ hardware }}'
       state: present
 
-- name: Delete domain, storage volumes and storage pool
+- name: Delete domain and storage volumes
   when: state == 'absent'
   block:
   - name: Delete domain before storage deletion
@@ -111,10 +104,4 @@
       uri: '{{ uri }}'
       pool: '{{ pool }}'
       name: '{{ configdrive }}'
-      state: absent
-
-  - name: Delete storage pool after volume deletion
-    jm1.libvirt.pool:
-      uri: '{{ uri }}'
-      name: '{{ pool }}'
       state: absent

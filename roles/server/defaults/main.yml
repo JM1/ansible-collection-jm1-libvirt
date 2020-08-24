@@ -48,10 +48,6 @@ networkconfig: !!null
 
 pool: 'default'
 
-pool_hardware:
-- type: dir
-- target: '/var/lib/libvirt/images'
-
 prealloc_metadata: no
 
 state: present

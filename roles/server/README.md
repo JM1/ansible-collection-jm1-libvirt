@@ -3,7 +3,6 @@
 This role helps to setup virtual machines using libvirt and cloud-init.
 
 **Details**
-- Builds a libvirt storage pool for the upcoming volumes
 - Fetches a cloud image, e.g. [`debian-*-openstack-amd64.qcow2`](https://cdimage.debian.org/cdimage/openstack/current/)
   and configures it as a libvirt storage volume
 - Clones the cloud image volume to get a base storage volume for the OS
@@ -90,8 +89,7 @@ hence `jm1.libvirt.volume_cloudinit` cannot be used on these systems!
 | `image_uri`              | *depends on `ansible_facts['distribution']`*                 | no       | Image file path (relative or absolute) or URL                                                                     |
 | `metadata`               | None                                                         | no       | cloud-init Meta-Data                                                                                              |
 | `networkconfig`          | None                                                         | no       | cloud-init Network Configuration                                                                                  |
-| `pool`                   | *depends on `ansible_facts['distribution']`*                 | no       | Name or UUID of the storage pool to create the volumes in                                                         |
-| `pool_hardware`          | *depends on `ansible_facts['distribution']`*                 | no       | Hardware of the storage pool, e.g. its type. Accepts all two-dash (with leading `--`) command line arguments of `virsh pool-define-as`, either as a list of plain arguments or as a dict key-value pairs without the leading `--` and having all dashs replaced by underscores |
+| `pool`                   | `default`                                                    | no       | Name or UUID of the storage pool to create the volumes in                                                         |
 | `prealloc_metadata`      | False                                                        | no       | Preallocate metadata (for qcow2 images which don't support full allocation)                                       |
 | `state`                  | `present`                                                    | no       | Should the volumes and domain be `present` or `absent`                                                            |
 | `uri`                    | `qemu:///system`                                             | no       | libvirt connection uri                                                                                            |
@@ -116,7 +114,7 @@ hence `jm1.libvirt.volume_cloudinit` cannot be used on these systems!
       import_role:
         name: jm1.libvirt.setup
         
-    - name: Build storage pool, fetch cloud image, create storage volumes and define domain (virtual machine)
+    - name: Fetch cloud image, create storage volumes and define domain (virtual machine)
       import_role:
         name: jm1.libvirt.server
       vars:
