@@ -5,8 +5,8 @@ This repo hosts the [`jm1.libvirt`](https://galaxy.ansible.com/jm1/libvirt) Ansi
 The collection includes a variety of Ansible content to help automate the provisioning and maintenance of libvirt clusters.
 
 It is inspired by the [Openstack Ansible modules](https://galaxy.ansible.com/openstack/cloud),
-e.g. [`jm1.libvirt.domain`](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/domain.py) and
-[`jm1.libvirt.volume_cloudinit`](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/volume_cloudinit.py)
+e.g. [`jm1.libvirt.domain`](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/domain.py) and
+[`jm1.libvirt.volume_cloudinit`](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/volume_cloudinit.py)
 resemble [`os_server`](https://docs.ansible.com/ansible/latest/modules/os_server_module.html) to create virtual machines
 with [libvirt](https://libvirt.org/) and [cloud-init](https://cloudinit.readthedocs.io/). For example:
 
@@ -50,23 +50,23 @@ or [`virt_pool`](https://docs.ansible.com/ansible/latest/modules/virt_pool_modul
 Click on the name of a module or role to view that content's documentation:
 
 - **Modules**:
-    * [domain](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/domain.py)
-    * [pool](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/pool.py)
-    * [volume_cloudinit](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/volume_cloudinit.py)
-    * [volume_import](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/volume_import.py)
-    * [volume_snapshot](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/volume_snapshot.py)
+    * [domain](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/domain.py)
+    * [pool](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/pool.py)
+    * [volume_cloudinit](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/volume_cloudinit.py)
+    * [volume_import](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/volume_import.py)
+    * [volume_snapshot](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/volume_snapshot.py)
 - **Module Utils**:
-    * [libvirt](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/module_utils/libvirt.py)
+    * [libvirt](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/module_utils/libvirt.py)
 - **Roles**:
-    * [server](https://github.com/JM1/ansible-collection-libvirt/blob/master/roles/server/README.md)
-    * [setup](https://github.com/JM1/ansible-collection-libvirt/blob/master/roles/setup/README.md)
+    * [server](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/roles/server/README.md)
+    * [setup](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/roles/setup/README.md)
 
 ## Requirements and Installation
 
 ### Installing necessary software
 
 Content in this collection requires additional tools and libraries, e.g. to interact with libvirt's APIs. You can use
-role [`jm1.libvirt.setup`](https://github.com/JM1/ansible-collection-libvirt/blob/master/roles/setup/README.md) to 
+role [`jm1.libvirt.setup`](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/roles/setup/README.md) to 
 install necessary software packages:
 
 ```yaml
@@ -154,7 +154,7 @@ Helpful tools for developing collections are `ansible`, `ansible-doc`, `ansible-
 | Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install ansible              ansible-doc python3-flake8 make yamllint` |
 | Ubuntu 20.04 LTS (Focal Fossa)               | `apt install ansible ansible-doc ansible-lint flake8 make yamllint` |
 
-Have a look at the included [`Makefile`](https://github.com/JM1/ansible-collection-libvirt/blob/master/Makefile) for
+Have a look at the included [`Makefile`](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/Makefile) for
 several frequently used commands, to e.g. build and lint a collection.
 
 ## More Information

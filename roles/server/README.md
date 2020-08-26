@@ -23,7 +23,7 @@ Available on Ansible Galaxy in Collection [jm1.libvirt](https://galaxy.ansible.c
 
 ## Requirements
 
-**NOTE**: You may use role [`jm1.libvirt.setup`](https://github.com/JM1/ansible-collection-libvirt/blob/master/roles/setup/README.md)
+**NOTE**: You may use role [`jm1.libvirt.setup`](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/roles/setup/README.md)
 to install all necessary software packages listed below.
 
 Python libraries `libvirt` and `lxml` are required by Ansible modules `jm1.libvirt.*`.

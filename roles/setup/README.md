@@ -5,10 +5,10 @@ This role helps to install necessary tools and libraries for all roles and modul
 
 **NOTE:** This role will *not* fetch and install any Ansible role or collection, because Ansible preloads all modules,
 roles and tasks etc. before it executes any of them. Please make sure that all necessary roles and collections are
-installed before running Ansible. To do so, you may follow the steps described in [`README.md`](https://github.com/JM1/ansible-collection-libvirt/blob/master/README.md)
-using the provided [`requirements.yml`](https://github.com/JM1/ansible-collection-libvirt/blob/master/requirements.yml).
+installed before running Ansible. To do so, you may follow the steps described in [`README.md`](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/README.md)
+using the provided [`requirements.yml`](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/requirements.yml).
 
-**NOTE:** Module [`jm1.libvirt.volume_cloudinit`](https://github.com/JM1/ansible-collection-libvirt/blob/master/plugins/modules/volume_cloudinit.py)
+**NOTE:** Module [`jm1.libvirt.volume_cloudinit`](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/volume_cloudinit.py)
 depends on `cloud-localds`, which is not available on `Red Hat Enterprise Linux (RHEL) 8` and `CentOS 8`!
 
 **Tested OS images**
@@ -23,8 +23,8 @@ Available on Ansible Galaxy in Collection [jm1.libvirt](https://galaxy.ansible.c
 
 Module `jm1.pkg.meta_pkg` from Collection [`jm1.pkg`](https://galaxy.ansible.com/jm1/pkg) is used to satisfy all package
 dependencies of this Collection [jm1.libvirt](https://galaxy.ansible.com/jm1/libvirt). To install `jm1.pkg.meta_pkg` you
-may follow the steps described in [`README.md`](https://github.com/JM1/ansible-collection-libvirt/blob/master/README.md)
-using the provided [`requirements.yml`](https://github.com/JM1/ansible-collection-libvirt/blob/master/requirements.yml).
+may follow the steps described in [`README.md`](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/README.md)
+using the provided [`requirements.yml`](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/requirements.yml).
 
 ## Variables
 
