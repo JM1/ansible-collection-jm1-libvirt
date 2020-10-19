@@ -7,6 +7,8 @@
 # Based on community.libvirt.virt_pool module written by Maciej Delmanowski <drybjed@gmail.com>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
+# TODO: Merge 'volume' and 'volume_snapshot' modules?!
+
 from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
