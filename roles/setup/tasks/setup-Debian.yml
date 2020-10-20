@@ -3,8 +3,8 @@
 
 # Tasks for Debian and Ubuntu have been unified in a single file because of similarities between both distributions.
 
-- name: Satisfy requirements for collection jm1.libvirt on Debian 10 (Buster)
-  when: distribution_id == ['Debian', '10']
+- name: Satisfy requirements for collection jm1.libvirt on Debian 10 (Buster) and Ubuntu 18.04 LTS (Bionic Beaver)
+  when: distribution_id in [['Debian', '10'], ['Ubuntu', '18.04']]
   jm1.pkg.meta_pkg:
     name: "jm1-libvirt-setup"
     version: "1"
@@ -19,8 +19,16 @@
     - python3-lxml
     - virtinst
 
-- name: Satisfy requirements for collection jm1.libvirt on Ubuntu 20.04 LTS (Focal Fossa)
-  when: distribution_id == ['Ubuntu', '20.04']
+- name: >-
+    Satisfy requirements for collection jm1.libvirt on Debian 11 (Bullseye), Debian NA (Testing, Unstable aka Sid,
+    Experimental) and Ubuntu 20.04 LTS (Focal Fossa)
+  when: distribution_id in [
+            ['Debian', '11'],
+            ['Debian', 'NA'],
+            ['Debian', 'Testing'],
+            ['Debian', 'Unstable'],
+            ['Ubuntu', '20.04']
+        ]
   jm1.pkg.meta_pkg:
     name: "jm1-libvirt-setup"
     version: "1"
