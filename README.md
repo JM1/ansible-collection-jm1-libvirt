@@ -66,6 +66,16 @@ Click on the name of a module or role to view that content's documentation:
 
 ### Installing necessary software
 
+Content in this collection requires additional roles and collections, e.g. to collect operating system facts. You can
+fetch them from Ansible Galaxy using the provided [`requirements.yml`](requirements.yml):
+
+```sh
+ansible-galaxy collection install --requirements-file requirements.yml
+ansible-galaxy role install --role-file requirements.yml
+# or
+make install-requirements
+```
+
 Content in this collection requires additional tools and libraries, e.g. to interact with libvirt's APIs. You can use
 role [`jm1.libvirt.setup`](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/roles/setup/README.md) to 
 install necessary software packages:
