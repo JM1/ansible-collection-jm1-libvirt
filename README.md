@@ -51,6 +51,7 @@ Click on the name of a module or role to view that content's documentation:
 
 - **Modules**:
     * [domain](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/domain.py)
+    * [net_xml](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/net_xml.py)
     * [pool](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/pool.py)
     * [volume](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/volume.py)
     * [volume_cloudinit](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/volume_cloudinit.py)

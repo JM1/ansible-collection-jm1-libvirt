@@ -10,8 +10,10 @@
 from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
+from ansible.module_utils._text import to_native
 from ansible.module_utils.basic import missing_required_lib
 from ansible.module_utils.six import iteritems
+import copy
 import traceback
 
 try:
@@ -88,3 +90,92 @@ if HAS_LIBVIRT and HAS_LXML:
                 else:
                     cli_args.append(v)
         return cli_args
+
+    def xml_elements_equal(e1, e2):
+        """ Test equivalence of (l)xml.etree.ElementTree
+            Ref.: https://stackoverflow.com/a/24349916/6490710
+        """
+        if e1.tag != e2.tag:
+            return False
+        if e1.text != e2.text:
+            return False
+        if e1.tail != e2.tail:
+            return False
+        if e1.attrib != e2.attrib:
+            return False
+        if len(e1) != len(e2):
+            return False
+        return all(
+            xml_elements_equal(c1, c2) for c1, c2 in zip(
+                sorted(e1, key=lambda x: x.tag),
+                sorted(e2, key=lambda x: x.tag)
+            ))
+
+    def xml_strings_equal(xml1, xml2, ignore_xpaths):
+        """ Test equivalence of two xml strings `xml1` and `xml2`, but ignoring nodes that match `ignore_xpaths` """
+
+        parser = etree.XMLParser(remove_comments=True, remove_pis=True, remove_blank_text=True)
+        xml1_root = etree.fromstring(xml1, parser)
+        xml2_root = etree.fromstring(xml2, parser)
+
+        # drop ignored XML nodes
+        for xml_root in [xml1_root, xml2_root]:
+            for ignore_xpath in ignore_xpaths:
+                ignored_nodes = xml_root.xpath(ignore_xpath)
+                if type(ignored_nodes) != list:
+                    raise ValueError(
+                        "XPath expression '%s' is not supported, it must be point to XML node(s)" % ignore_xpath)
+
+                for ignored_node in ignored_nodes:
+                    if type(ignored_node) != etree._Element and type(ignored_node) != etree.ElementTree.Element:
+                        raise ValueError(
+                            "XPath expression '%s' is not supported, it must be point to XML node(s)" % ignore_xpath)
+
+                    ignored_node.getparent().remove(ignored_node)
+
+        return xml_elements_equal(xml1_root, xml2_root)
+
+    def make_xml_path(xml_root, path):
+        """ Create XML node hierarchy, adding child nodes if required, to match the given `path`. """
+        if path[0] != '/':
+            raise ValueError("XML path '%s' is not absolute" % path)
+
+        path_segments = path[1:].split('/')[1:]  # drop leading slash and root node
+
+        node = xml_root
+        for path_segment in path_segments:
+            child = node.find(path_segment)
+            if child is None:
+                child = etree.SubElement(node, path_segment)
+            node = child
+        return node
+
+    def update_xml_desc(old_xml, new_xml, keep_xpaths):
+        """ Add nodes from `old_xml` to `new_xml` as specified in `keep_xpaths`"""
+
+        new_xml_root = etree.fromstring(new_xml)
+        old_xml_root = etree.fromstring(old_xml)
+        old_xml_tree = old_xml_root.getroottree()
+
+        # drop XML nodes from new xml that should be kept
+        for keep_xpath in keep_xpaths:
+            keep_nodes = new_xml_root.xpath(keep_xpath)
+            if type(keep_nodes) != list:
+                    raise ValueError(
+                        "XPath expression '%s' is not supported, it must be point to XML node(s)" % keep_xpath)
+
+            for keep_node in keep_nodes:
+                keep_node.getparent().remove(keep_node)
+
+        # replace XML nodes in new xml that should be kept with XML nodes from old xml
+        for keep_xpath in keep_xpaths:
+            for old_node in old_xml_root.xpath(keep_xpath):
+                if type(old_node) != etree._Element and type(old_node) != etree.ElementTree.Element:
+                        raise ValueError(
+                            "XPath expression '%s' is not supported, it must be point to XML node(s)" % keep_xpath)
+
+                old_parent_path = old_xml_tree.getpath(old_node.getparent())
+                new_parent_node = make_xml_path(new_xml_root, old_parent_path)
+                new_parent_node.append(copy.deepcopy(old_node))
+
+        return to_native(etree.tostring(new_xml_root))
