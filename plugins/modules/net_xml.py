@@ -58,7 +58,9 @@ options:
         required: true
         type: str
 
-notes: []
+notes:
+  - "For changes to take effect, a modified network might have to be restarted. To do so, e.g. call
+     M(community.libvirt.virt_net) with 'C(command): I(stop)' and 'C(command): I(start)'."
 
 extends_documentation_fragment:
   - jm1.libvirt.libvirt
@@ -177,10 +179,10 @@ def create_or_modify(ignore_xpaths, uri, xml, module):
         if not network:
             # create
             network = conn.networkDefineXML(xml)
-            return True, network.XMLDesc(0)
+            return True, network.XMLDesc(flags=libvirt.VIR_NETWORK_XML_INACTIVE)
         else:
             # maybe modify
-            old_xml = network.XMLDesc(0)
+            old_xml = network.XMLDesc(flags=libvirt.VIR_NETWORK_XML_INACTIVE)
 
             if libvirt_utils.xml_strings_equal(old_xml, xml, ignore_xpaths):
                 # network does not require update
@@ -188,7 +190,7 @@ def create_or_modify(ignore_xpaths, uri, xml, module):
 
             xml = libvirt_utils.update_xml_desc(old_xml, xml, ignore_xpaths)
             network = conn.networkDefineXML(xml)
-            return True, network.XMLDesc(0)
+            return True, network.XMLDesc(flags=libvirt.VIR_NETWORK_XML_INACTIVE)
 
 
 def delete(ignore_xpaths, uri, xml, module):
@@ -202,7 +204,7 @@ def delete(ignore_xpaths, uri, xml, module):
             # network absent already
             return False, None
 
-        xml = network.XMLDesc(0)  # fetch xml before deletion
+        xml = network.XMLDesc(flags=libvirt.VIR_NETWORK_XML_INACTIVE)  # fetch xml before deletion
         network.undefine()
         return True, xml
 
