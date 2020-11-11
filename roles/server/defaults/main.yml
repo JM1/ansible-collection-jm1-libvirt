@@ -3,7 +3,7 @@
 
 # NOTE: Variables are sorted by name
 
-configdrive: '{{ inventory_hostname }}_[cidata].{{ configdrive_format }}'
+configdrive: '{{ inventory_hostname }}_cidata.{{ configdrive_format }}'
 
 configdrive_filesystem: 'iso'
 
