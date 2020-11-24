@@ -67,10 +67,8 @@ endif
 
 lint-flake8: # lint modules, module_utils, plugins and roles
 # NOTE: Flake8 project options have been moved to file .flake8 and hence cmd line arg '--isolated' has been dropped
-	@flake8 \
-		--exit-zero \
-		-- \
-		.
+# NOTE: Option '--exit-zero' has been dropped because make is supposed to stop if there are errors
+	@flake8 .
 .PHONY: lint-flake8
 
 lint-yamllint: # lint apbs und roles
