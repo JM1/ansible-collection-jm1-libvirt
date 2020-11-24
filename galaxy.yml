@@ -13,4 +13,4 @@ namespace: jm1
 readme: README.md
 repository: https://github.com/jm1/ansible-collection-jm1-libvirt
 tags: null
-version: 2020.11.12
+version: 2020.11.24
