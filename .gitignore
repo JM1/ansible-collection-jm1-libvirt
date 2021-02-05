@@ -1,5 +1,6 @@
 # Ignore generated files
 build/
+.cache/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -20,13 +20,13 @@ all: lint build-collection
 .PHONY: all
 
 $(CLTN_DIR)/$(CLTN_FILE):
-	@ansible-galaxy collection build --output-path $(CLTN_DIR) && \
-	cd $(CLTN_DIR) && \
-	gzip -d < $(CLTN_FILE) | tar --delete --wildcards -f - 'build' | gzip > $(CLTN_FILE).cleaned && \
-	mv $(CLTN_FILE).cleaned $(CLTN_FILE)
-# Manually removing the build folder is required because Ansible Galaxy prior to 2.10 does not support the
-# 'build_ignore' flag in the collection metadata file 'galaxy.yml'. Note that this requires a recent release of GNU tar,
-# bsdtar is not supported.
+	@build_dir=$$(readlink -f $(CLTN_DIR) ); \
+	[ -d .cache/build ] || mkdir -p .cache/build && \
+	rsync -va --delete --exclude build/ --exclude .cache/ . .cache/build/ && \
+	cd .cache/build/ && \
+	ansible-galaxy collection build --output-path "$$build_dir"
+# Build in a clean subdir without the build/ and .cache/ dirs is required because Ansible Galaxy prior to 2.10 does not
+# support the 'build_ignore' flag in the collection metadata file 'galaxy.yml'. Note that this requires the rsync tool.
 # Ref.: https://docs.ansible.com/ansible/latest/dev_guide/collections_galaxy_meta.html
 
 build-collection: $(CLTN_DIR)/$(CLTN_FILE)
