@@ -161,8 +161,8 @@ if HAS_LIBVIRT and HAS_LXML:
         for keep_xpath in keep_xpaths:
             keep_nodes = new_xml_root.xpath(keep_xpath)
             if type(keep_nodes) != list:
-                    raise ValueError(
-                        "XPath expression '%s' is not supported, it must be point to XML node(s)" % keep_xpath)
+                raise ValueError(
+                    "XPath expression '%s' is not supported, it must be point to XML node(s)" % keep_xpath)
 
             for keep_node in keep_nodes:
                 keep_node.getparent().remove(keep_node)
@@ -171,8 +171,8 @@ if HAS_LIBVIRT and HAS_LXML:
         for keep_xpath in keep_xpaths:
             for old_node in old_xml_root.xpath(keep_xpath):
                 if type(old_node) != etree._Element and type(old_node) != etree.ElementTree.Element:
-                        raise ValueError(
-                            "XPath expression '%s' is not supported, it must be point to XML node(s)" % keep_xpath)
+                    raise ValueError(
+                        "XPath expression '%s' is not supported, it must be point to XML node(s)" % keep_xpath)
 
                 old_parent_path = old_xml_tree.getpath(old_node.getparent())
                 new_parent_node = make_xml_path(new_xml_root, old_parent_path)
