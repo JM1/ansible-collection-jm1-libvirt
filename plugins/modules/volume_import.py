@@ -105,6 +105,7 @@ from ansible.module_utils.basic import AnsibleModule, missing_required_lib
 from ansible.module_utils.six.moves.urllib.parse import urlsplit
 from ansible.module_utils.urls import open_url
 import ansible.module_utils.six as six
+import contextlib
 import os
 import re
 import shutil
@@ -232,10 +233,14 @@ def import_(uri,
         if image_path_is_uri:
             # Download image, create libvirt storage volume and upload image to volume
             with tempfile.TemporaryDirectory() as dir:
-                with open_url(image_path) as r:
+                with contextlib.closing(open_url(image_path)) as r:
                     filename = None
 
-                    cd = r.getheader('Content-Disposition')
+                    if six.PY2:
+                        cd = r.info().getheader('Content-Disposition')
+                    elif six.PY3:
+                        cd = r.getheader('Content-Disposition')
+
                     if cd:
                         try:
                             filename = re.findall("filename=(.+)", cd)[0]
