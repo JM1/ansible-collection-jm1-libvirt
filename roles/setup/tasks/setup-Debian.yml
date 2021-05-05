@@ -3,6 +3,8 @@
 
 # Tasks for Debian and Ubuntu have been unified in a single file because of similarities between both distributions.
 
+# No need to update apt cache here because role jm1.pkg.setup handles apt cache updates already
+
 - name: Satisfy requirements for collection jm1.libvirt on Debian 10 (Buster) and Ubuntu 18.04 LTS (Bionic Beaver)
   when: distribution_id in [['Debian', '10'], ['Ubuntu', '18.04']]
   jm1.pkg.meta_pkg:
