@@ -27,7 +27,7 @@ else:
     HAS_LIBVIRT = True
 
 try:
-    from lxml import etree
+    from lxml import etree, objectify
 except ImportError:
     # Error handled in the calling module.
     LXML_IMPORT_ERROR = traceback.format_exc()
@@ -117,6 +117,9 @@ if HAS_LIBVIRT and HAS_LXML:
         parser = etree.XMLParser(remove_comments=True, remove_pis=True, remove_blank_text=True)
         xml1_root = etree.fromstring(xml1, parser)
         xml2_root = etree.fromstring(xml2, parser)
+
+        objectify.deannotate(xml1_root, cleanup_namespaces=True)
+        objectify.deannotate(xml2_root, cleanup_namespaces=True)
 
         # drop ignored XML nodes
         for xml_root in [xml1_root, xml2_root]:
