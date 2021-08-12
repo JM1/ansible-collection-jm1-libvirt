@@ -113,7 +113,7 @@ You can also include it in a `requirements.yml` file and install it via
 ---
 collections:
   - name: jm1.libvirt
-    version: 2021.4.1
+    version: 2021.8.12
 ```
 
 ## Usage and Playbooks
