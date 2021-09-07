@@ -11,13 +11,15 @@ This role helps to setup virtual machines using libvirt and cloud-init.
 
 **Tested OS images**
 - Cloud image of [`Debian 10 (Buster)` \[`amd64`\]](https://cdimage.debian.org/cdimage/openstack/current/)
+- Cloud image of [`Debian 11 (Bullseye)` \[`amd64`\]](https://cdimage.debian.org/images/cloud/bullseye/latest/)
 - Generic cloud image of [`CentOS 7 (Core)` \[`amd64`\]](https://cloud.centos.org/centos/7/images/)
 - Generic cloud image of [`CentOS 8 (Core)` \[`amd64`\]](https://cloud.centos.org/centos/8/x86_64/images/)
 - Ubuntu cloud image of [`Ubuntu 20.04 LTS (Focal Fossa)` \[`amd64`\]](https://cloud-images.ubuntu.com/focal/)
-    *NOTE*: Ubuntu's cloud image of `Ubuntu 20.04 LTS (Focal Fossa)` uses [Predictable Network Interface Names](
-            https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/), hence network
-            interfaces do not get simple names such as `eth0` assigned but e.g. `enp1s0` in a UEFI QEMU/KVM machine or
-            `ens3` in a BIOS QEMU/KVM machine.
+
+*NOTE*: `Ubuntu 20.04 LTS (Focal Fossa)` and `Debian 11 (Bullseye)` use [Predictable Network Interface Names](
+https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/), hence network interfaces do not
+get simple names such as `eth0` assigned but e.g. `enp1s0` in a UEFI QEMU/KVM machine or `ens3` in a BIOS QEMU/KVM
+machine.
 
 Available on Ansible Galaxy in Collection [jm1.libvirt](https://galaxy.ansible.com/jm1/libvirt).
 
@@ -31,6 +33,7 @@ Python libraries `libvirt` and `lxml` are required by Ansible modules `jm1.libvi
 | OS                                           | Install Instructions                                                                           |
 | -------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | Debian 10 (Buster)                           | `apt install python-libvirt python-lxml python3-libvirt python3-lxml`                          |
+| Debian 11 (Bullseye)                         | `apt install python3-libvirt python3-lxml`                                                     |
 | Red Hat Enterprise Linux (RHEL) 7 / CentOS 7 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install libvirt-python python-lxml`   |
 | Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install python3-libvirt python3-lxml` |
 | Ubuntu 20.04 LTS (Focal Fossa)               | `apt install python3-libvirt python3-lxml`                                                     |
@@ -40,6 +43,7 @@ Python library [`backports.tempfile`](https://pypi.org/project/backports.tempfil
 | OS                                           | Install Instructions                                       |
 | -------------------------------------------- | ---------------------------------------------------------- |
 | Debian 10 (Buster)                           | `apt install python-backports.tempfile`                    |
+| Debian 11 (Bullseye)                         | Not required because of Python 3                           |
 | Red Hat Enterprise Linux (RHEL) 7 / CentOS 7 | `yum install python-pip && pip install backports.tempfile` |
 | Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Not required because of Python 3                           |
 | Ubuntu 20.04 LTS (Focal Fossa)               | Not required because of Python 3                           |
@@ -52,6 +56,7 @@ hence `jm1.libvirt.volume_cloudinit` cannot be used on these systems!
 | OS                                           | Install Instructions                                                          |
 | -------------------------------------------- | ----------------------------------------------------------------------------- |
 | Debian 10 (Buster)                           | `apt install cloud-image-utils`                                               |
+| Debian 11 (Bullseye)                         | `apt install cloud-image-utils`                                               |
 | Red Hat Enterprise Linux (RHEL) 7 / CentOS 7 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install cloud-utils` |
 | Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | :x: Not available :x:                                                         |
 | Ubuntu 20.04 LTS (Focal Fossa)               | `apt install cloud-image-utils`                                               |
@@ -61,6 +66,7 @@ hence `jm1.libvirt.volume_cloudinit` cannot be used on these systems!
 | OS                                           | Install Instructions                                                             |
 | -------------------------------------------- | -------------------------------------------------------------------------------- |
 | Debian 10 (Buster)                           | `apt install libvirt-clients`                                                    |
+| Debian 11 (Bullseye)                         | `apt install libvirt-clients`                                                    |
 | Red Hat Enterprise Linux (RHEL) 7 / CentOS 7 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install libvirt-client` |
 | Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install libvirt-client` |
 | Ubuntu 20.04 LTS (Focal Fossa)               | `apt install libvirt-clients`                                                    |
@@ -70,6 +76,7 @@ hence `jm1.libvirt.volume_cloudinit` cannot be used on these systems!
 | OS                                           | Install Instructions                                                           |
 | -------------------------------------------- | ------------------------------------------------------------------------------ |
 | Debian 10 (Buster)                           | `apt install virtinst`                                                         |
+| Debian 11 (Bullseye)                         | `apt install virtinst`                                                         |
 | Red Hat Enterprise Linux (RHEL) 7 / CentOS 7 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install virt-install` |
 | Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install virt-install` |
 | Ubuntu 20.04 LTS (Focal Fossa)               | `apt install virtinst`                                                         |

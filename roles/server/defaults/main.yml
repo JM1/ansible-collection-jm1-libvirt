@@ -21,6 +21,7 @@ image_checksum: |-
         'CentOS 7': 'sha256:1db30c9c272fb37b00111b93dcebff16c278384755bdbe158559e9c240b73b80',
         'CentOS 8': 'sha256:d8984b9baee57b127abce310def0f4c3c9d5b3cea7ea8451fc4ffcbc9935b640',
         'Debian 10': 'sha256:00f76f2fd8e3d74c4f0de7cf97cb7b1706be4299ad44a452849e7993757a8549',
+        'Debian 11': 'sha256:fa7ded4761d732cd9a4a05339307fc22a79bca1bee5e44f4fc282b6d3f1ade65',
         'Ubuntu 20.04': 'sha256:37f24aab47b9692e24f8f4dd7f8fcd86214e1a7feef23f744e1f06c377f43b13'
     }[distribution_id|join(' ')]
     }}
@@ -38,6 +39,7 @@ image_uri: |-
         'CentOS 7': 'https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-2003.qcow2',
         'CentOS 8': 'https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-GenericCloud-8.2.2004-20200611.2.x86_64.qcow2',
         'Debian 10': 'https://cdimage.debian.org/cdimage/openstack/archive/10.4.2-20200608/debian-10.4.2-20200608-openstack-amd64.qcow2',
+        'Debian 11': 'https://cdimage.debian.org/images/cloud/bullseye/latest/debian-11-genericcloud-amd64.qcow2',
         'Ubuntu 20.04': 'https://cloud-images.ubuntu.com/focal/20200616/focal-server-cloudimg-amd64.img'
     }[distribution_id|join(' ')]
     }}
@@ -62,6 +64,7 @@ volume: "{{ inventory_hostname }}.{{ volume_format }}"
 volume_capacity: |-
     {{
     {
+        'Debian 11': '10G',
         'Ubuntu 20.04': '10G'
     }[distribution_id|join(' ')] | default('5G')
     }}
