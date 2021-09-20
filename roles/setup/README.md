@@ -1,4 +1,4 @@
-# Ansible Role: jm1.libvirt.setup
+# Ansible Role `jm1.libvirt.setup`
 
 This role helps to install necessary tools and libraries for all roles and modules in collection
 [jm1.libvirt](https://galaxy.ansible.com/jm1/libvirt).
@@ -54,7 +54,9 @@ For instructions on how to run Ansible playbooks have look at Ansible's
 
 ## License
 
-GPL3
+GNU General Public License v3.0 or later
+
+See [LICENSE.md](../../LICENSE.md) to see the full text.
 
 ## Author
 

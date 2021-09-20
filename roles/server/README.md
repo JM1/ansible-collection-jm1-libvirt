@@ -1,4 +1,4 @@
-# Ansible Role: jm1.libvirt.server
+# Ansible Role `jm1.libvirt.server`
 
 This role helps to setup virtual machines using libvirt and cloud-init.
 
@@ -139,7 +139,9 @@ For instructions on how to run Ansible playbooks have look at Ansible's
 
 ## License
 
-GPL3
+GNU General Public License v3.0 or later
+
+See [LICENSE.md](../../LICENSE.md) to see the full text.
 
 ## Author
 
