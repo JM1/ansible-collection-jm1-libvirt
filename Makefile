@@ -12,7 +12,7 @@ CLTN_FILE := $(CLTN_NAMESPACE)-$(CLTN_NAME)-$(CLTN_VERSION).tar.gz
 CLTN_DIR := build
 # NOTE: Keep lists of modules and roles in sync with README.md
 CLTN_MODULES := domain net_xml pool pool_xml volume volume_cloudinit volume_import volume_snapshot
-CLTN_ROLES := server setup
+CLTN_ROLES := $(shell cd roles && ls -1)
 
 # Targets are sorted by name
 
