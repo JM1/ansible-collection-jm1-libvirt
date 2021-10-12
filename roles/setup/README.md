@@ -30,23 +30,24 @@ using the provided [`requirements.yml`](https://github.com/JM1/ansible-collectio
 
 ## Variables
 
-None.
+| Name               | Default value                           | Required | Description                                                                                               |
+| ------------------ | --------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------- |
+| `distribution_id`  | *depends on operating system*           | no       | List which uniquely identifies a distribution release, e.g. `[ 'Debian', '10' ]` for `Debian 10 (Buster)` |
 
 ## Dependencies
 
 | Name            | Description                                                                         |
 | --------------- | ----------------------------------------------------------------------------------- |
-| `jm1.common`    | Provides `distribution_id` fact which is used to choose OS-specific defaults        |
 | `jm1.pkg.setup` | Installs necessary software for module `jm1.pkg.meta_pkg` from collection `jm1.pkg` |
 
 ## Example Playbook
 
-```
+```yml
 - hosts: all
-  tasks:
-    - name: Satisfy software requirements
-      import_role:
-        name: jm1.libvirt.setup
+  roles:
+  - name: Satisfy software requirements
+    role: jm1.libvirt.setup
+    tags: ["jm1.libvirt.setup"]
 ```
 
 For instructions on how to run Ansible playbooks have look at Ansible's
