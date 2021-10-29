@@ -43,7 +43,7 @@ options:
     format:
         default: raw
         description:
-            - "Disk format (see manpage of qemu-image for allowed disk formats), defaulting to raw."
+            - "Disk image format (see manpage of qemu-img for allowed image file formats), defaulting to raw."
         required: false
         type: str
     filesystem:
