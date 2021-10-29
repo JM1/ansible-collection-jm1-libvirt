@@ -44,6 +44,7 @@ using the provided [`requirements.yml`](https://github.com/JM1/ansible-collectio
 
 ```yml
 - hosts: all
+  become: yes
   roles:
   - name: Satisfy software requirements
     role: jm1.libvirt.setup
