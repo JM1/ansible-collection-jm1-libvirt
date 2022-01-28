@@ -127,7 +127,7 @@ def cloud_localds(volume_format,
                   configdrive_path,
                   module):
     # TODO: Reimplement cloud-localds in Python and drop dependency on cloud-localds,
-    #       because it is not available on Red Hat Enterprise Linux 8 and CentOS 8.
+    #       because it is not available on Red Hat Enterprise Linux 8 / 9 and CentOS 8 / 9.
     #       Ref.: https://salsa.debian.org/cloud-team/cloud-utils/-/blob/master/bin/cloud-localds
 
     cmd = 'cloud-localds'
