@@ -7,7 +7,7 @@
 
 # NOTE: Variables are sorted by name
 
-configdrive: '{{ inventory_hostname }}_cidata.{{ configdrive_format }}'
+configdrive: '{{ domain }}_cidata.{{ configdrive_format }}'
 
 configdrive_filesystem: 'iso'
 
@@ -85,7 +85,7 @@ uri: 'qemu:///system'
 userdata: |
     #cloud-config
 
-volume: "{{ inventory_hostname }}.{{ volume_format }}"
+volume: "{{ domain }}.{{ volume_format }}"
 
 volume_capacity: |-
     {{
