@@ -47,7 +47,8 @@ image_checksum: |-
         'CentOS 9': 'sha256:11ab1622342f64165003b7dac1868fd81a53990d340e1f1f832e9d9ed718293f',
         'Debian 10': 'sha256:00f76f2fd8e3d74c4f0de7cf97cb7b1706be4299ad44a452849e7993757a8549',
         'Debian 11': 'sha256:fa7ded4761d732cd9a4a05339307fc22a79bca1bee5e44f4fc282b6d3f1ade65',
-        'Ubuntu 20.04': 'sha256:37f24aab47b9692e24f8f4dd7f8fcd86214e1a7feef23f744e1f06c377f43b13'
+        'Ubuntu 20.04': 'sha256:37f24aab47b9692e24f8f4dd7f8fcd86214e1a7feef23f744e1f06c377f43b13',
+        'Fedora 36': 'sha256:ca9e514cc2f4a7a0188e7c68af60eb4e573d2e6850cc65b464697223f46b4605'
     }[distribution_id|join(' ')]
     }}
 
@@ -66,7 +67,8 @@ image_uri: |-
         'CentOS 9': 'https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-9-20220127.0.x86_64.qcow2',
         'Debian 10': 'https://cdimage.debian.org/cdimage/openstack/archive/10.4.2-20200608/debian-10.4.2-20200608-openstack-amd64.qcow2',
         'Debian 11': 'https://cdimage.debian.org/images/cloud/bullseye/latest/debian-11-genericcloud-amd64.qcow2',
-        'Ubuntu 20.04': 'https://cloud-images.ubuntu.com/focal/20200616/focal-server-cloudimg-amd64.img'
+        'Ubuntu 20.04': 'https://cloud-images.ubuntu.com/focal/20200616/focal-server-cloudimg-amd64.img',
+        'Fedora 36': 'https://download.fedoraproject.org/pub/fedora/linux/releases/36/Cloud/x86_64/images/Fedora-Cloud-Base-36-1.5.x86_64.qcow2'
     }[distribution_id|join(' ')]
     }}
 
@@ -91,7 +93,8 @@ volume_capacity: |-
     {{
     {
         'Debian 11': '10G',
-        'Ubuntu 20.04': '10G'
+        'Ubuntu 20.04': '10G',
+        'Fedora 36': '10G'
     }[distribution_id|join(' ')] | default('5G')
     }}
 

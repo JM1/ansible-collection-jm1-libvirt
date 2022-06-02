@@ -25,6 +25,10 @@ galaxy_info:
     - bionic
     - focal
 
+  - name: Fedora
+    versions:
+    - 36
+
   galaxy_tags:
   - development
   - system

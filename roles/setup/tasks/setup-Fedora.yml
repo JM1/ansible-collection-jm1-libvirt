@@ -1,0 +1,8 @@
+---
+- name: Satisfy requirements for collection jm1.libvirt on Fedora
+  ansible.builtin.dnf:
+    name:
+      - python3-libvirt
+      - python3-lxml
+      - libvirt-client
+      - virt-install
