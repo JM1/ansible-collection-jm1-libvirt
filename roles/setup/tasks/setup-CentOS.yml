@@ -6,7 +6,7 @@
 # NOTE: Synchronize changes with README.md
 
 - name: Enable yum repositories for Extra Packages for Enterprise Linux (EPEL)
-  import_role:
+  ansible.builtin.import_role:
     name: jm1.pkg.yum_repository
   vars:
     yum_repository_config: '{{ yum_repository_config_epel }}'
@@ -29,7 +29,7 @@
       - virt-install
 
   - name: Install pip dependencies for Red Hat Enterprise Linux 7 and CentOS 7
-    pip:
+    ansible.builtin.pip:
       name: backports.tempfile
 
 - name: Satisfy requirements for collection jm1.libvirt on Red Hat Enterprise Linux 8 and 9 and CentOS 8 and 9
