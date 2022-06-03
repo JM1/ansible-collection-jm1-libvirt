@@ -1,5 +1,5 @@
 ---
-# Copyright (c) 2021 Jakob Meng, <jakobmeng@web.de>
+# Copyright (c) 2021-2022 Jakob Meng, <jakobmeng@web.de>
 # vim:set fileformat=unix tabstop=2 shiftwidth=2 expandtab:
 # kate: end-of-line unix; space-indent on; indent-width 2; remove-trailing-spaces modified;
 
@@ -35,7 +35,21 @@ distribution_id:
 
 domain: '{{ inventory_hostname }}'
 
-hardware: !!null
+hardware:
+- cpu: 'host'
+- vcpus: '2'
+- memory: '1024'
+- virt_type: 'kvm'
+- graphics: 'spice,listen=socket'
+# With --network being omitted a single NIC will be created in the guest.
+# Ref.: man virt-install
+#- network: 'network=default,model=virtio'
+- disk: "vol='{{ pool }}/{{ volume }}',device=disk,bus=virtio,serial='root'"
+- disk: "vol='{{ pool }}/{{ configdrive }}',device=disk,bus=virtio,serial='cidata'"
+# Specifying os variant is HIGHLY RECOMMENDED, as it can greatly increase performance by specifying virtio
+# among other guest tweaks. It also enables support for QEMU Guest Agent by adding a virtio-serial channel.
+# Ref.: man virt-install
+- os_variant: 'linux2020'
 
 image: "{{ image_uri|urlsplit('path')|basename }}"
 
