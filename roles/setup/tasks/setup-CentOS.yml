@@ -29,9 +29,8 @@
       - virt-install
 
   - name: Install pip dependencies for Red Hat Enterprise Linux 7 and CentOS 7
-    block:
-    - pip:
-        name: backports.tempfile
+    pip:
+      name: backports.tempfile
 
 - name: Satisfy requirements for collection jm1.libvirt on Red Hat Enterprise Linux 8 and 9 and CentOS 8 and 9
   when: distribution_id|last in ['8', '9']
