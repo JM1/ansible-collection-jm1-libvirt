@@ -22,14 +22,16 @@
     - virtinst
 
 - name: >-
-    Satisfy requirements for collection jm1.libvirt on Debian 11 (Bullseye), Debian NA (Testing, Unstable aka Sid,
-    Experimental) and Ubuntu 20.04 LTS (Focal Fossa)
+    Satisfy requirements for collection jm1.libvirt on Debian 11 (Bullseye), Debian 12 (Bookworm), Debian NA (Testing,
+    Unstable aka Sid, Experimental), Ubuntu 20.04 LTS (Focal Fossa) and Ubuntu 22.04 LTS (Jammy Jellyfish)
   when: distribution_id in [
             ['Debian', '11'],
+            ['Debian', '12'],
             ['Debian', 'NA'],
             ['Debian', 'Testing'],
             ['Debian', 'Unstable'],
-            ['Ubuntu', '20.04']
+            ['Ubuntu', '20.04'],
+            ['Ubuntu', '22.04']
         ]
   jm1.pkg.meta_pkg:
     name: "jm1-libvirt-setup"
