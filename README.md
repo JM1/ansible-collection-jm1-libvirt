@@ -1,14 +1,21 @@
 # Ansible Collection for using libvirt
 
-This repo hosts the [`jm1.libvirt`](https://galaxy.ansible.com/jm1/libvirt) Ansible Collection.
+This repo hosts the Ansible collection [`jm1.libvirt`](https://galaxy.ansible.com/jm1/libvirt).
 
-The collection includes a variety of Ansible content to help automate the provisioning and maintenance of libvirt clusters.
+The collection includes a variety of Ansible content to help automate the provisioning and maintenance of libvirt
+clusters.
 
-It is inspired by the [Openstack Ansible modules](https://galaxy.ansible.com/openstack/cloud),
-e.g. [`jm1.libvirt.domain`](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/domain.py) and
-[`jm1.libvirt.volume_cloudinit`](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/volume_cloudinit.py)
-resemble [`os_server`](https://docs.ansible.com/ansible/latest/modules/os_server_module.html) to create virtual machines
-with [libvirt](https://libvirt.org/) and [cloud-init](https://cloudinit.readthedocs.io/). For example:
+It is inspired by the [Ansible OpenStack collection][openstack-cloud]. For example, [`jm1.libvirt.domain`][
+jm1-libvirt-domain] and [`jm1.libvirt.volume_cloudinit`][jm1-libvirt-volume-cloudinit] resemble
+[`openstack.cloud.server`][openstack-cloud-server] to create virtual machines with [libvirt][libvirt] and
+[cloud-init][cloud-init-doc]:
+
+[cloud-init-doc]: https://cloudinit.readthedocs.io/
+[jm1-libvirt-domain]: plugins/modules/domain.py
+[jm1-libvirt-volume-cloudinit]: plugins/modules/volume_cloudinit.py
+[libvirt]: https://libvirt.org/
+[openstack-cloud]: https://galaxy.ansible.com/openstack/cloud
+[openstack-cloud-server]: https://docs.ansible.com/ansible/latest/collections/openstack/cloud/server_module.html
 
 ```yaml
 - hosts: all
@@ -26,11 +33,10 @@ with [libvirt](https://libvirt.org/) and [cloud-init](https://cloudinit.readthed
             hostname: {{ inventory_hostname }}
 ```
 
-In comparison to the `virt_*` modules of the [community.libvirt Collection](https://galaxy.ansible.com/community/libvirt),
+In comparison to the `community.libvirt.virt_*` modules of the [community.libvirt][community.libvirt] collection,
 all `jm1.libvirt.*` modules are *idempotent*, that is they can be applied multiple times without changing the result
 beyond the initial application. To create libvirt domains (virtual machines), storage pools or volumes you write
-[`virsh`](https://libvirt.org/manpages/virsh.html)-like options in Ansible-idiomatic
-[YAML lists](https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html). For example:
+[`virsh`][virsh]-like options in Ansible-idiomatic [YAML lists][ansible-yaml-syntax]. For example:
 
 ```yaml
 - jm1.libvirt.pool
@@ -42,27 +48,33 @@ beyond the initial application. To create libvirt domains (virtual machines), st
         target: '/var/lib/libvirt/images'
 ```
 
-No need to write XML documents as with e.g. [`virt`](https://docs.ansible.com/ansible/latest/modules/virt_module.html)
-or [`virt_pool`](https://docs.ansible.com/ansible/latest/modules/virt_pool_module.html).
+No need to write XML documents as with e.g. [`community.libvirt.virt`][community-libvirt-virt] or
+[`community.libvirt.virt_pool`][community-libvirt-virt-pool].
+
+[virsh]: https://libvirt.org/manpages/virsh.html
+[community.libvirt]: https://galaxy.ansible.com/community/libvirt
+[community-libvirt-virt]: https://docs.ansible.com/ansible/latest/collections/community/libvirt/virt_module.html
+[community-libvirt-virt-pool]: https://docs.ansible.com/ansible/latest/collections/community/libvirt/virt_pool_module.html
+[ansible-yaml-syntax]: https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html
 
 ## Included content
 
 Click on the name of a module or role to view that content's documentation:
 
 - **Modules**:
-    * [domain](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/domain.py)
-    * [net_xml](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/net_xml.py)
-    * [pool](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/pool.py)
-    * [pool_xml](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/pool_xml.py)
-    * [volume](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/volume.py)
-    * [volume_cloudinit](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/volume_cloudinit.py)
-    * [volume_import](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/volume_import.py)
-    * [volume_snapshot](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/modules/volume_snapshot.py)
+    * [domain](plugins/modules/domain.py)
+    * [net_xml](plugins/modules/net_xml.py)
+    * [pool](plugins/modules/pool.py)
+    * [pool_xml](plugins/modules/pool_xml.py)
+    * [volume](plugins/modules/volume.py)
+    * [volume_cloudinit](plugins/modules/volume_cloudinit.py)
+    * [volume_import](plugins/modules/volume_import.py)
+    * [volume_snapshot](plugins/modules/volume_snapshot.py)
 - **Module Utils**:
-    * [libvirt](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/plugins/module_utils/libvirt.py)
+    * [libvirt](plugins/module_utils/libvirt.py)
 - **Roles**:
-    * [server](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/roles/server/README.md)
-    * [setup](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/roles/setup/README.md)
+    * [server](roles/server/README.md)
+    * [setup](roles/setup/README.md)
 
 ## Requirements and Installation
 
@@ -79,8 +91,7 @@ make install-requirements
 ```
 
 Content in this collection requires additional tools and libraries, e.g. to interact with libvirt's APIs. You can use
-role [`jm1.libvirt.setup`](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/roles/setup/README.md) to 
-install necessary software packages:
+role [`jm1.libvirt.setup`](roles/setup/README.md) to install necessary software packages:
 
 ```yaml
 - hosts: all
@@ -183,7 +194,7 @@ Helpful tools for developing collections are `ansible`, `ansible-doc`, `ansible-
 | Ubuntu 20.04 LTS (Focal Fossa)               | `apt install ansible ansible-doc ansible-lint flake8 make yamllint` |
 | Ubuntu 22.04 LTS (Jammy Jellyfish)           | `apt install ansible             ansible-lint flake8 make yamllint` |
 
-Have a look at the included [`Makefile`](https://github.com/JM1/ansible-collection-jm1-libvirt/blob/master/Makefile) for
+Have a look at the included [`Makefile`](Makefile) for
 several frequently used commands, to e.g. build and lint a collection.
 
 ## More Information
