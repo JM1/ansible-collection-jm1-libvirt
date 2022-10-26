@@ -6,27 +6,27 @@
 - name: Fail if required vars are not set
   ansible.builtin.fail:
   when: >
-    configdrive == None or configdrive|length == 0 or
-    configdrive_filesystem == None or configdrive_filesystem|length == 0 or
-    configdrive_format == None or configdrive_format|length == 0 or
-    domain == None or domain|length == 0 or
-    image == None or image|length == 0 or
-    image_format == None or image_format|length == 0 or
-    image_uri == None or image_uri|length == 0 or
-    pool == None or pool|length == 0 or
-    state == None or state|length == 0 or
-    uri == None or uri|length == 0 or
-    userdata == None or userdata|length == 0 or
-    volume == None or volume|length == 0 or
-    volume_capacity == None or volume_capacity|length == 0 or
-    volume_format == None or volume_format|length == 0
+    configdrive == None or configdrive | length == 0 or
+    configdrive_filesystem == None or configdrive_filesystem | length == 0 or
+    configdrive_format == None or configdrive_format | length == 0 or
+    domain == None or domain | length == 0 or
+    image == None or image | length == 0 or
+    image_format == None or image_format | length == 0 or
+    image_uri == None or image_uri | length == 0 or
+    pool == None or pool | length == 0 or
+    state == None or state | length == 0 or
+    uri == None or uri | length == 0 or
+    userdata == None or userdata | length == 0 or
+    volume == None or volume | length == 0 or
+    volume_capacity == None or volume_capacity | length == 0 or
+    volume_format == None or volume_format | length == 0
 
 - name: Fail if vars have invalid values
   ansible.builtin.fail:
   when: >
-    prealloc_metadata|type_debug != 'bool' or
+    prealloc_metadata | type_debug != 'bool' or
     (state != 'present' and state != 'absent') or
-    volume_cow|type_debug != 'bool'
+    volume_cow | type_debug != 'bool'
 
 - name: Fail if volume names are equal
   ansible.builtin.fail:

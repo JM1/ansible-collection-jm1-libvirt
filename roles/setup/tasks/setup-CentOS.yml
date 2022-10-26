@@ -12,7 +12,7 @@
     yum_repository_config: '{{ yum_repository_config_epel }}'
 
 - name: Satisfy requirements for collection jm1.libvirt on Red Hat Enterprise Linux 7 and CentOS 7
-  when: distribution_id|last == '7'
+  when: distribution_id | last == '7'
   block:
   - name: Install package dependencies for Red Hat Enterprise Linux 7 and CentOS 7
     jm1.pkg.meta_pkg:
@@ -33,7 +33,7 @@
       name: backports.tempfile
 
 - name: Satisfy requirements for collection jm1.libvirt on Red Hat Enterprise Linux 8 and 9 and CentOS 8 and 9
-  when: distribution_id|last in ['8', '9']
+  when: distribution_id | last in ['8', '9']
   block:
   - name: Install package dependencies for Red Hat Enterprise Linux 8 and 9 and CentOS 8 and 9
     jm1.pkg.meta_pkg:

@@ -27,7 +27,7 @@ distribution_id:
   # ansible_facts.distribution_major_version is defined as 'testing' which will be converted to 'Testing'.
   # Use major version for all other distributions, e.g. CentOS 7, Debian 10 (Buster) or Red Hat Enterprise Linux 8.
   "{{ ansible_facts.distribution_version if ansible_facts.distribution == 'Ubuntu' else
-      ansible_facts.distribution_major_version|title if
+      ansible_facts.distribution_major_version | title if
         ansible_facts.distribution == 'Debian' and
         ansible_facts.distribution_major_version is not number and
         ansible_facts.distribution_major_version != 'NA' else
@@ -51,7 +51,7 @@ hardware:
 # Ref.: man virt-install
 - os_variant: 'linux2020'
 
-image: "{{ image_uri|urlsplit('path')|basename }}"
+image: "{{ image_uri | urlsplit('path') | basename }}"
 
 image_checksum: |-
     {{
@@ -64,14 +64,14 @@ image_checksum: |-
         'Debian 12': 'sha512:e1b7f1b7f82d9e6fc684e6b1836e3cb6c7a39550b38f42a3e4a6f17d28192ef3ed0e7c0d11d8b649bee803d43cd451af6585362bbf97f77d8e3e65b722506fbf',
         'Ubuntu 20.04': 'sha256:37f24aab47b9692e24f8f4dd7f8fcd86214e1a7feef23f744e1f06c377f43b13',
         'Ubuntu 22.04': 'sha256:bc0ba5004401a9df0f4d2f4f6078758c8f3ba6d180323578fdf1ae7ba62141f6'
-    }[distribution_id|join(' ')]
+    }[distribution_id | join(' ')]
     }}
 
 image_format: |-
     {{
     {
         'Ubuntu 20.04': 'qcow2'
-    }[distribution_id|join(' ')] | default((image|splitext|last)[1:])
+    }[distribution_id | join(' ')] | default((image | splitext | last)[1:])
     }}
 
 image_uri: |-
@@ -85,7 +85,7 @@ image_uri: |-
         'Debian 12': 'https://cdimage.debian.org/images/cloud/bookworm/daily/20220923-1147/debian-12-genericcloud-amd64-daily-20220923-1147.qcow2',
         'Ubuntu 20.04': 'https://cloud-images.ubuntu.com/focal/20200616/focal-server-cloudimg-amd64.img',
         'Ubuntu 22.04': 'https://cloud-images.ubuntu.com/jammy/20220924/jammy-server-cloudimg-amd64.img'
-    }[distribution_id|join(' ')]
+    }[distribution_id | join(' ')]
     }}
 
 metadata: !!null
@@ -112,7 +112,7 @@ volume_capacity: |-
         'Debian 12': '10G',
         'Ubuntu 20.04': '10G',
         'Ubuntu 22.04': '10G'
-    }[distribution_id|join(' ')] | default('5G')
+    }[distribution_id |j oin(' ')] | default('5G')
     }}
 
 volume_cow: no
