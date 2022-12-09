@@ -38,10 +38,25 @@
   - name: Install package dependencies for Red Hat Enterprise Linux 8 and 9 and CentOS 8 and 9
     jm1.pkg.meta_pkg:
       name: "jm1-libvirt-setup"
-      version: "1"
+      version: "2"
       depends:
       - jm1-pkg-setup
       - python3-libvirt
       - python3-lxml
       - libvirt-client
       - virt-install
+      #
+      # dependencies of cloud-localds from https://github.com/canonical/cloud-utils
+      - dosfstools
+      - genisoimage
+      - mtools
+      - qemu-img
+      - tar
+
+  - name: Install cloud-localds from Canonical's cloud-utils
+    ansible.builtin.get_url:
+      dest: /usr/local/sbin/cloud-localds
+      group: root
+      mode: u=rwx,g=rx,o=rx
+      owner: root
+      url: https://github.com/canonical/cloud-utils/raw/main/bin/cloud-localds
