@@ -3,7 +3,7 @@ authors:
   - Jakob Meng (https://github.com/jm1)
 dependencies:
   "community.libvirt": '>=1.0.1'
-  "jm1.pkg": '>=2022.9.25'
+  "jm1.pkg": '>=2022.12.10'
 description: null
 documentation: https://github.com/jm1/ansible-collection-jm1-libvirt/tree/master/docs
 homepage: https://github.com/jm1/ansible-collection-jm1-libvirt
