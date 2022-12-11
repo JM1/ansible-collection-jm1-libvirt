@@ -104,10 +104,9 @@ def create(uri,
                 --connect '{uri}'
                 --name '{domain_name}'
                 {virt_install_args}
-            """.replace('\n', ' ').format(
-                uri=uri,
-                domain_name=domain_name,
-                virt_install_args=' '.join(virt_install_args))
+            """.replace('\n', ' ').format(uri=uri,
+                                          domain_name=domain_name,
+                                          virt_install_args=' '.join(virt_install_args))
 
         module.run_command(cmd, check_rc=True)
 

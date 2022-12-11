@@ -128,10 +128,9 @@ def create(uri,
                 pool-define-as
                 --name '{pool_name}'
                 {virsh_args}
-            """.replace('\n', ' ').format(
-                uri=uri,
-                pool_name=pool_name,
-                virsh_args=' '.join(virsh_args))
+            """.replace('\n', ' ').format(uri=uri,
+                                          pool_name=pool_name,
+                                          virsh_args=' '.join(virsh_args))
 
         module.run_command(cmd, check_rc=True)
 

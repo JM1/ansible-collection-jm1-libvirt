@@ -205,12 +205,11 @@ def create(uri,
                     '{volume_name}'
                     '{configdrive_size}'
                     --format '{volume_format}'
-                """.replace('\n', ' ').format(
-                    uri=uri,
-                    pool_name=pool_name,
-                    volume_name=volume_name,
-                    configdrive_size=configdrive_size,
-                    volume_format=volume_format)
+                """.replace('\n', ' ').format(uri=uri,
+                                              pool_name=pool_name,
+                                              volume_name=volume_name,
+                                              configdrive_size=configdrive_size,
+                                              volume_format=volume_format)
 
             module.run_command(cmd, check_rc=True)
 
@@ -222,11 +221,10 @@ def create(uri,
                     --pool '{pool_name}'
                     '{volume_name}'
                     '{configdrive_path}'
-                """.replace('\n', ' ').format(
-                    uri=uri,
-                    pool_name=pool_name,
-                    volume_name=volume_name,
-                    configdrive_path=configdrive_path)
+                """.replace('\n', ' ').format(uri=uri,
+                                              pool_name=pool_name,
+                                              volume_name=volume_name,
+                                              configdrive_path=configdrive_path)
 
             module.run_command(cmd, check_rc=True)
 

@@ -159,12 +159,11 @@ def import_from_disk(uri,
             '{volume_name}'
             '{image_size}'
             --format '{image_format}'
-        """.replace('\n', ' ').format(
-            uri=uri,
-            pool_name=pool_name,
-            volume_name=volume_name,
-            image_size=image_size,
-            image_format=image_format)
+        """.replace('\n', ' ').format(uri=uri,
+                                      pool_name=pool_name,
+                                      volume_name=volume_name,
+                                      image_size=image_size,
+                                      image_format=image_format)
 
     module.run_command(cmd, check_rc=True)
 
@@ -176,11 +175,10 @@ def import_from_disk(uri,
                 --pool '{pool_name}'
                 '{volume_name}'
                 '{image_path}'
-            """.replace('\n', ' ').format(
-                uri=uri,
-                pool_name=pool_name,
-                volume_name=volume_name,
-                image_path=image_path)
+            """.replace('\n', ' ').format(uri=uri,
+                                          pool_name=pool_name,
+                                          volume_name=volume_name,
+                                          image_path=image_path)
 
         module.run_command(cmd, check_rc=True)
 
@@ -195,10 +193,9 @@ def import_from_disk(uri,
                     vol-delete
                     '{volume_name}'
                     --pool '{pool_name}'
-                """.replace('\n', ' ').format(
-                    uri=uri,
-                    pool_name=pool_name,
-                    volume_name=volume_name)
+                """.replace('\n', ' ').format(uri=uri,
+                                              pool_name=pool_name,
+                                              volume_name=volume_name)
 
             module.run_command(cmd, check_rc=True)
 
