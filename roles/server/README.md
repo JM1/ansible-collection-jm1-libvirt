@@ -105,27 +105,27 @@ hence `jm1.libvirt.volume_cloudinit` cannot be used on these systems!
 
 | Name                     | Default value                                              | Required | Description                                                                                                       |
 | ------------------------ | ---------------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------- |
-| `configdrive`            | `{{ inventory_hostname }}_cidata.{{ configdrive_format }}` | no       | Name of the Config Drive storage volume                                                                           |
-| `configdrive_filesystem` | `iso`                                                      | no       | Filesystem format (vfat or iso) of Config Drive (see `man cloud-localds`)                                         |
-| `configdrive_format`     | `raw`                                                      | no       | Disk format of Config Drive storage volume (see `man qemu-image` for allowed disk formats)                        |
-| `distribution_id`        | *depends on operating system*                              | no       | List which uniquely identifies a distribution release, e.g. `[ 'Debian', '10' ]` for `Debian 10 (Buster)`         |
-| `domain`                 | `{{ inventory_hostname }}`                                 | no       | Name of the domain (virtual machine)                                                                              |
-| `hardware`               | *refer to [`roles/server/defaults/main.yml`](defaults/main.yml)* | no       | Hardware of the domain. Accepts all two-dash (with leading `--`) command line arguments of `virt-install`, either as a list of plain arguments or as a dict key-value pairs without the leading `--` and having all dashs replaced by underscores |
-| `image`                  | Filename of `image_uri`*                                   | no       | Name of the new storage volume where content of `image_uri` is copied to                                          |
-| `image_checksum`         | *depends on `distribution_id`*                             | no       | Image checksum                                                                                                    |
-| `image_format`           | Fileextension of `image_uri`                               | no       | Image file format, e.g. raw or qcow2                                                                              |
-| `image_uri`              | *depends on `distribution_id`*                             | no       | Image file path (relative or absolute) or URL                                                                     |
-| `metadata`               | None                                                       | no       | cloud-init Meta-Data                                                                                              |
-| `networkconfig`          | None                                                       | no       | cloud-init Network Configuration                                                                                  |
-| `pool`                   | `default`                                                  | no       | Name or UUID of the storage pool to create the volumes in                                                         |
-| `prealloc_metadata`      | False                                                      | no       | Preallocate metadata (for qcow2 images which don't support full allocation)                                       |
-| `state`                  | `present`                                                  | no       | Should the volumes and domain be `present` or `absent`                                                            |
-| `uri`                    | `qemu:///system`                                           | no       | libvirt connection uri                                                                                            |
-| `userdata`               | `#cloud-config\n`                                          | no       | cloud-init User-Data                                                                                              |
-| `volume`                 | `{{ inventory_hostname }}.{{ volume_format }}`             | no       | Name of the OS storage volume                                                                                     |
-| `volume_capacity`        | *depends on `distribution_id`*                             | no       | Size of the OS storage volume to be created, as a scaled integer (see NOTES in `man virsh`)                       |
-| `volume_cow`             | False                                                      | no       | Create a copy-on-write OS storage volume that is linked to the base `image`                                       |
-| `volume_format`          | `qcow2`                                                    | no       | Disk format of OS storage volume; raw, bochs, qcow, qcow2, vmdk, qed                                              |
+| `configdrive`            | `{{ inventory_hostname }}_cidata.{{ configdrive_format }}` | false    | Name of the Config Drive storage volume                                                                           |
+| `configdrive_filesystem` | `iso`                                                      | false    | Filesystem format (vfat or iso) of Config Drive (see `man cloud-localds`)                                         |
+| `configdrive_format`     | `raw`                                                      | false    | Disk format of Config Drive storage volume (see `man qemu-image` for allowed disk formats)                        |
+| `distribution_id`        | *depends on operating system*                              | false    | List which uniquely identifies a distribution release, e.g. `[ 'Debian', '10' ]` for `Debian 10 (Buster)`         |
+| `domain`                 | `{{ inventory_hostname }}`                                 | false    | Name of the domain (virtual machine)                                                                              |
+| `hardware`               | *refer to [`roles/server/defaults/main.yml`](defaults/main.yml)* | false | Hardware of the domain. Accepts all two-dash (with leading `--`) command line arguments of `virt-install`, either as a list of plain arguments or as a dict key-value pairs without the leading `--` and having all dashs replaced by underscores |
+| `image`                  | Filename of `image_uri`*                                   | false    | Name of the new storage volume where content of `image_uri` is copied to                                          |
+| `image_checksum`         | *depends on `distribution_id`*                             | false    | Image checksum                                                                                                    |
+| `image_format`           | Fileextension of `image_uri`                               | false    | Image file format, e.g. raw or qcow2                                                                              |
+| `image_uri`              | *depends on `distribution_id`*                             | false    | Image file path (relative or absolute) or URL                                                                     |
+| `metadata`               | None                                                       | false    | cloud-init Meta-Data                                                                                              |
+| `networkconfig`          | None                                                       | false    | cloud-init Network Configuration                                                                                  |
+| `pool`                   | `default`                                                  | false    | Name or UUID of the storage pool to create the volumes in                                                         |
+| `prealloc_metadata`      | False                                                      | false    | Preallocate metadata (for qcow2 images which don't support full allocation)                                       |
+| `state`                  | `present`                                                  | false    | Should the volumes and domain be `present` or `absent`                                                            |
+| `uri`                    | `qemu:///system`                                           | false    | libvirt connection uri                                                                                            |
+| `userdata`               | `#cloud-config\n`                                          | false    | cloud-init User-Data                                                                                              |
+| `volume`                 | `{{ inventory_hostname }}.{{ volume_format }}`             | false    | Name of the OS storage volume                                                                                     |
+| `volume_capacity`        | *depends on `distribution_id`*                             | false    | Size of the OS storage volume to be created, as a scaled integer (see NOTES in `man virsh`)                       |
+| `volume_cow`             | False                                                      | false    | Create a copy-on-write OS storage volume that is linked to the base `image`                                       |
+| `volume_format`          | `qcow2`                                                    | false    | Disk format of OS storage volume; raw, bochs, qcow, qcow2, vmdk, qed                                              |
 
 ## Dependencies
 
@@ -135,7 +135,7 @@ None.
 
 ```yml
 - hosts: all
-  become: yes
+  become: true
   roles:
   - name: Satisfy software requirements
     role: jm1.libvirt.setup

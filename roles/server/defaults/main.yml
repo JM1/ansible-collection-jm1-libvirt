@@ -94,7 +94,7 @@ networkconfig: !!null
 
 pool: 'default'
 
-prealloc_metadata: no
+prealloc_metadata: false
 
 state: present
 
@@ -115,6 +115,6 @@ volume_capacity: |-
     }[distribution_id |j oin(' ')] | default('5G')
     }}
 
-volume_cow: no
+volume_cow: false
 
 volume_format: 'qcow2'
