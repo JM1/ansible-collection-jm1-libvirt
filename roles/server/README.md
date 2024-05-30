@@ -10,15 +10,18 @@ This role helps to setup virtual machines using libvirt and cloud-init.
 - Defines a libvirt domain (virtual machine) with both the OS storage volume and the cloud-init Config Drive attached
 
 **Tested OS images**
-- Cloud image of [`Debian 10 (Buster)` \[`amd64`\]](https://cdimage.debian.org/images/cloud/buster/daily/)
-- Cloud image of [`Debian 11 (Bullseye)` \[`amd64`\]](https://cdimage.debian.org/images/cloud/bullseye/daily/)
-- Cloud image of [`Debian 12 (Bookworm)` \[`amd64`\]](https://cdimage.debian.org/images/cloud/bookworm/daily/)
-- Generic cloud image of [`CentOS 7 (Core)` \[`amd64`\]](https://cloud.centos.org/centos/7/images/)
-- Generic cloud image of [`CentOS 8 (Stream)` \[`amd64`\]](https://cloud.centos.org/centos/8-stream/x86_64/images/)
-- Generic cloud image of [`CentOS 9 (Stream)` \[`amd64`\]](https://cloud.centos.org/centos/9-stream/x86_64/images/)
-- Ubuntu cloud image of [`Ubuntu 18.04 LTS (Bionic Beaver)` \[`amd64`\]](https://cloud-images.ubuntu.com/bionic/current/)
-- Ubuntu cloud image of [`Ubuntu 20.04 LTS (Focal Fossa)` \[`amd64`\]](https://cloud-images.ubuntu.com/focal/)
-- Ubuntu cloud image of [`Ubuntu 22.04 LTS (Jammy Jellyfish)` \[`amd64`\]](https://cloud-images.ubuntu.com/jammy/)
+- [Cloud image (`amd64`)](https://cdimage.debian.org/images/cloud/buster/daily/) of Debian 10 (Buster)
+- [Cloud image (`amd64`)](https://cdimage.debian.org/images/cloud/bullseye/daily/) of Debian 11 (Bullseye)
+- [Cloud image (`amd64`)](https://cdimage.debian.org/images/cloud/bookworm/daily/) of Debian 12 (Bookworm)
+- [Cloud image (`amd64`)](https://cdimage.debian.org/images/cloud/trixie/daily/) of Debian 13 (Trixie)
+- [Cloud image (`amd64`)](https://cloud.centos.org/centos/7/images/) of CentOS 7 (Core)
+- [Cloud image (`amd64`)](https://cloud.centos.org/centos/8-stream/x86_64/images/) of CentOS 8 (Stream)
+- [Cloud image (`amd64`)](https://cloud.centos.org/centos/9-stream/x86_64/images/) of CentOS 9 (Stream)
+- [Cloud image (`amd64`)](https://download.fedoraproject.org/pub/fedora/linux/releases/40/Cloud/x86_64/images/) of Fedora Cloud Base 40
+- [Cloud image (`amd64`)](https://cloud-images.ubuntu.com/bionic/current/) of Ubuntu 18.04 LTS (Bionic Beaver)
+- [Cloud image (`amd64`)](https://cloud-images.ubuntu.com/focal/) of Ubuntu 20.04 LTS (Focal Fossa)
+- [Cloud image (`amd64`)](https://cloud-images.ubuntu.com/jammy/) of Ubuntu 22.04 LTS (Jammy Jellyfish)
+- [Cloud image (`amd64`)](https://cloud-images.ubuntu.com/noble/) of Ubuntu 24.04 LTS (Noble Numbat)
 
 *NOTE*: `Ubuntu 20.04 LTS (Focal Fossa)` and later as well as `Debian 11 (Bullseye)` and later use
 [Predictable Network Interface Names](
@@ -40,11 +43,14 @@ Python libraries `libvirt` and `lxml` are required by Ansible modules `jm1.libvi
 | Debian 10 (Buster)                           | `apt install python-libvirt python-lxml python3-libvirt python3-lxml`                          |
 | Debian 11 (Bullseye)                         | `apt install python3-libvirt python3-lxml`                                                     |
 | Debian 12 (Bookworm)                         | `apt install python3-libvirt python3-lxml`                                                     |
+| Debian 13 (Trixie)                           | `apt install python3-libvirt python3-lxml`                                                     |
+| Fedora                                       | `dnf install python3-libvirt python3-lxml` |
 | Red Hat Enterprise Linux (RHEL) 7 / CentOS 7 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install libvirt-python python-lxml`   |
 | Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install python3-libvirt python3-lxml` |
 | Red Hat Enterprise Linux (RHEL) 9 / CentOS 9 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install python3-libvirt python3-lxml` |
 | Ubuntu 20.04 LTS (Focal Fossa)               | `apt install python3-libvirt python3-lxml`                                                     |
 | Ubuntu 22.04 LTS (Jammy Jellyfish)           | `apt install python3-libvirt python3-lxml`                                                     |
+| Ubuntu 24.04 LTS (Noble Numbat)              | `apt install python3-libvirt python3-lxml`                                                     |
 
 Python library [`backports.tempfile`](https://pypi.org/project/backports.tempfile/) (Python 2 only) is required by Ansible modules `jm1.libvirt.*`.
 
@@ -53,11 +59,14 @@ Python library [`backports.tempfile`](https://pypi.org/project/backports.tempfil
 | Debian 10 (Buster)                           | `apt install python-backports.tempfile`                    |
 | Debian 11 (Bullseye)                         | Not required because of Python 3                           |
 | Debian 12 (Bookworm)                         | Not required because of Python 3                           |
+| Debian 13 (Trixie)                           | Not required because of Python 3                           |
+| Fedora                                       | Not required because of Python 3                           |
 | Red Hat Enterprise Linux (RHEL) 7 / CentOS 7 | `yum install python-pip && pip install backports.tempfile` |
 | Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Not required because of Python 3                           |
 | Red Hat Enterprise Linux (RHEL) 9 / CentOS 9 | Not required because of Python 3                           |
 | Ubuntu 20.04 LTS (Focal Fossa)               | Not required because of Python 3                           |
 | Ubuntu 22.04 LTS (Jammy Jellyfish)           | Not required because of Python 3                           |
+| Ubuntu 24.04 LTS (Noble Numbat)              | Not required because of Python 3                           |
 
 `cloud-localds` is required by Ansible module `jm1.libvirt.volume_cloudinit`.
 
@@ -69,11 +78,14 @@ hence `jm1.libvirt.volume_cloudinit` cannot be used on these systems!
 | Debian 10 (Buster)                           | `apt install cloud-image-utils`                                               |
 | Debian 11 (Bullseye)                         | `apt install cloud-image-utils`                                               |
 | Debian 12 (Bookworm)                         | `apt install cloud-image-utils`                                               |
+| Debian 13 (Trixie)                           | `apt install cloud-image-utils`                                               |
+| Fedora                                       | `dnf install cloud-utils`                                                     |
 | Red Hat Enterprise Linux (RHEL) 7 / CentOS 7 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install cloud-utils` |
 | Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | :x: Not available :x:                                                         |
 | Red Hat Enterprise Linux (RHEL) 9 / CentOS 9 | :x: Not available :x:                                                         |
 | Ubuntu 20.04 LTS (Focal Fossa)               | `apt install cloud-image-utils`                                               |
 | Ubuntu 22.04 LTS (Jammy Jellyfish)           | `apt install cloud-image-utils`                                               |
+| Ubuntu 24.04 LTS (Noble Numbat)              | `apt install cloud-image-utils`                                               |
 
 `virsh` is required by Ansible modules `jm1.libvirt.*`.
 
@@ -82,11 +94,14 @@ hence `jm1.libvirt.volume_cloudinit` cannot be used on these systems!
 | Debian 10 (Buster)                           | `apt install libvirt-clients`                                                    |
 | Debian 11 (Bullseye)                         | `apt install libvirt-clients`                                                    |
 | Debian 12 (Bookworm)                         | `apt install libvirt-clients`                                                    |
+| Debian 13 (Trixie)                           | `apt install libvirt-clients`                                                    |
+| Fedora                                       | `dnf install libvirt-client`                                                     |
 | Red Hat Enterprise Linux (RHEL) 7 / CentOS 7 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install libvirt-client` |
 | Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install libvirt-client` |
 | Red Hat Enterprise Linux (RHEL) 9 / CentOS 9 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install libvirt-client` |
 | Ubuntu 20.04 LTS (Focal Fossa)               | `apt install libvirt-clients`                                                    |
 | Ubuntu 22.04 LTS (Jammy Jellyfish)           | `apt install libvirt-clients`                                                    |
+| Ubuntu 24.04 LTS (Noble Numbat)              | `apt install libvirt-clients`                                                    |
 
 `virt-install` is required by Ansible module `jm1.libvirt.domain`.
 
@@ -95,11 +110,14 @@ hence `jm1.libvirt.volume_cloudinit` cannot be used on these systems!
 | Debian 10 (Buster)                           | `apt install virtinst`                                                         |
 | Debian 11 (Bullseye)                         | `apt install virtinst`                                                         |
 | Debian 12 (Bookworm)                         | `apt install virtinst`                                                         |
+| Debian 13 (Trixie)                           | `apt install virtinst`                                                         |
+| Fedora                                       | `dnf install virt-install`                                                     |
 | Red Hat Enterprise Linux (RHEL) 7 / CentOS 7 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install virt-install` |
 | Red Hat Enterprise Linux (RHEL) 8 / CentOS 8 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install virt-install` |
 | Red Hat Enterprise Linux (RHEL) 9 / CentOS 9 | Enable [EPEL](https://fedoraproject.org/wiki/EPEL). `yum install virt-install` |
 | Ubuntu 20.04 LTS (Focal Fossa)               | `apt install virtinst`                                                         |
 | Ubuntu 22.04 LTS (Jammy Jellyfish)           | `apt install virtinst`                                                         |
+| Ubuntu 24.04 LTS (Noble Numbat)              | `apt install virtinst`                                                         |
 
 ## Variables
 

@@ -9,4 +9,6 @@
                         # ansible-galaxy and the provided requirements.yml to install all missing role dependencies.
 
 - name: Load tasks specific to OS (fails if OS is unsupported)
-  ansible.builtin.include_tasks: "setup-{{ distribution_id | first }}.yml"
+  ansible.builtin.include_tasks: "{{ lookup('first_found',
+                                            ['setup-' + distribution_id | join('-') + '.yml',
+                                             'setup-' + distribution_id | first + '.yml']) }}"

@@ -8,9 +8,8 @@
 # Tasks for Debian and Ubuntu have been unified in a single file because of similarities between both distributions.
 
 # No need to update apt cache here because role jm1.pkg.setup handles apt cache updates already
-- name: >-
-    Satisfy requirements for collection jm1.libvirt on Debian 11 (Bullseye) or later and Ubuntu 20.04 LTS (Focal Fossa)
-    or later
+
+- name: Satisfy requirements for collection jm1.libvirt on Debian 10 (Buster) and Ubuntu 18.04 LTS (Bionic Beaver)
   jm1.pkg.meta_pkg:
     name: "jm1-libvirt-setup"
     version: "1"
@@ -18,6 +17,9 @@
     - jm1-pkg-setup
     - cloud-image-utils
     - libvirt-clients
+    - python-backports.tempfile
+    - python-libvirt
+    - python-lxml
     - python3-libvirt
     - python3-lxml
     - virtinst

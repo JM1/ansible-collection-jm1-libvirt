@@ -14,24 +14,21 @@ configdrive_filesystem: 'iso'
 configdrive_format: 'raw'
 
 # Variable distribution_id is a list which uniquely identifies a distribution release, e.g.
-#  [ 'CentOS', '8' ] for CentOS 8 (both Core and Stream)
-#  [ 'Debian', '10' ] for Debian 10 (Buster)
-#  [ 'Debian', 'Unstable' ] for Debian Unstable (Sid)
-#  [ 'Red Hat Enterprise Linux', '8' ]` for Red Hat Enterprise Linux (RHEL) 8
-#  [ 'Ubuntu', '20.04' ] for Ubuntu 20.04 LTS (Focal Fossa)
+#  ['CentOS', '8'] for CentOS 8 (both Core and Stream)
+#  ['Debian', '10'] for Debian 10 (Buster)
+#  ['Red Hat Enterprise Linux', '8' ]` for Red Hat Enterprise Linux (RHEL) 8
+#  ['Ubuntu', '20.04' ] for Ubuntu 20.04 LTS (Focal Fossa)
+#
+# NOTE: Version numbers for upcoming Debian releases are not stable. For example, when lsb_release is available, which
+# is the default, Ansible will report 'n/a' for Debian's testing and unstable (Sid) distributions. When lsb_release
+# has been uninstalled, the version string will be 'trixie/sid' or similar. In the past, 'NA' would be reported when
+# lsb_release was not available and 'testing' or 'sid' when it was installed.
 distribution_id:
 - '{{ ansible_facts.distribution }}'
 - # Use major and minor version for Ubuntu, e.g. Ubuntu 18.04 LTS (Bionic Beaver) or Ubuntu 20.04 LTS (Focal Fossa).
-  # Use major version in title case for unknown Debian releases, i.e. the major version is not a number and not 'NA',
-  # e.g. when VERSION_ID is not set in /etc/os-release and lsb_release is available on that host, then
-  # ansible_facts.distribution_major_version is defined as 'testing' which will be converted to 'Testing'.
   # Use major version for all other distributions, e.g. CentOS 7, Debian 10 (Buster) or Red Hat Enterprise Linux 8.
   "{{ ansible_facts.distribution_version if ansible_facts.distribution == 'Ubuntu' else
-      ansible_facts.distribution_major_version | title if
-        ansible_facts.distribution == 'Debian' and
-        ansible_facts.distribution_major_version is not number and
-        ansible_facts.distribution_major_version != 'NA' else
-          ansible_facts.distribution_major_version }}"
+      ansible_facts.distribution_major_version }}"
 
 domain: '{{ inventory_hostname }}'
 
@@ -43,7 +40,8 @@ hardware:
 - graphics: 'spice,listen=socket'
 # With --network being omitted a single NIC will be created in the guest.
 # Ref.: man virt-install
-#- network: 'network=default,model=virtio'
+#
+# - network: 'network=default,model=virtio'
 - disk: "vol='{{ pool }}/{{ volume }}',device=disk,bus=virtio,serial='root'"
 - disk: "vol='{{ pool }}/{{ configdrive }}',device=disk,bus=virtio,serial='cidata'"
 # Specifying os variant is HIGHLY RECOMMENDED, as it can greatly increase performance by specifying virtio
@@ -57,34 +55,41 @@ image_checksum: |-
     {{
     {
         'CentOS 7': 'sha256:1db30c9c272fb37b00111b93dcebff16c278384755bdbe158559e9c240b73b80',
-        'CentOS 8': 'sha256:3510fc7deb3e1939dbf3fe6f65a02ab1efcc763480bc352e4c06eca2e4f7c2a2',
-        'CentOS 9': 'sha256:11ab1622342f64165003b7dac1868fd81a53990d340e1f1f832e9d9ed718293f',
-        'Debian 10': 'sha256:00f76f2fd8e3d74c4f0de7cf97cb7b1706be4299ad44a452849e7993757a8549',
-        'Debian 11': 'sha256:fa7ded4761d732cd9a4a05339307fc22a79bca1bee5e44f4fc282b6d3f1ade65',
-        'Debian 12': 'sha512:e1b7f1b7f82d9e6fc684e6b1836e3cb6c7a39550b38f42a3e4a6f17d28192ef3ed0e7c0d11d8b649bee803d43cd451af6585362bbf97f77d8e3e65b722506fbf',
-        'Ubuntu 20.04': 'sha256:37f24aab47b9692e24f8f4dd7f8fcd86214e1a7feef23f744e1f06c377f43b13',
-        'Ubuntu 22.04': 'sha256:bc0ba5004401a9df0f4d2f4f6078758c8f3ba6d180323578fdf1ae7ba62141f6'
+        'CentOS 8': omit,
+        'CentOS 9': omit,
+        'Debian 10': omit,
+        'Debian 11': omit,
+        'Debian 12': omit,
+        'Debian 13': omit,
+        'Ubuntu 20.04': omit,
+        'Ubuntu 22.04': omit,
+        'Ubuntu 24.04': omit
     }[distribution_id | join(' ')]
     }}
 
 image_format: |-
     {{
     {
-        'Ubuntu 20.04': 'qcow2'
+        'Ubuntu 20.04': 'qcow2',
+        'Ubuntu 22.04': 'qcow2',
+        'Ubuntu 24.04': 'qcow2'
     }[distribution_id | join(' ')] | default((image | splitext | last)[1:])
     }}
 
+# TODO: Replace daily image with latest stable image when Debian 13 (Trixie) has been released.
 image_uri: |-
     {{
     {
         'CentOS 7': 'https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-2003.qcow2',
-        'CentOS 8': 'https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-GenericCloud-8.4.2105-20210603.0.x86_64.qcow2',
-        'CentOS 9': 'https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-9-20220127.0.x86_64.qcow2',
-        'Debian 10': 'https://cdimage.debian.org/cdimage/openstack/archive/10.4.2-20200608/debian-10.4.2-20200608-openstack-amd64.qcow2',
+        'CentOS 8': 'https://cloud.centos.org/centos/8-stream/x86_64/images/CentOS-Stream-GenericCloud-8-latest.x86_64.qcow2',
+        'CentOS 9': 'https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-9-latest.x86_64.qcow2',
+        'Debian 10': 'https://cdimage.debian.org/images/cloud/buster/latest/debian-10-genericcloud-amd64.qcow2',
         'Debian 11': 'https://cdimage.debian.org/images/cloud/bullseye/latest/debian-11-genericcloud-amd64.qcow2',
-        'Debian 12': 'https://cdimage.debian.org/images/cloud/bookworm/daily/20220923-1147/debian-12-genericcloud-amd64-daily-20220923-1147.qcow2',
-        'Ubuntu 20.04': 'https://cloud-images.ubuntu.com/focal/20200616/focal-server-cloudimg-amd64.img',
-        'Ubuntu 22.04': 'https://cloud-images.ubuntu.com/jammy/20220924/jammy-server-cloudimg-amd64.img'
+        'Debian 12': 'https://cdimage.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2',
+        'Debian 13': 'https://cdimage.debian.org/images/cloud/trixie/daily/latest/debian-13-genericcloud-amd64-daily.qcow2',
+        'Ubuntu 20.04': 'https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img',
+        'Ubuntu 22.04': 'https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img',
+        'Ubuntu 24.04': 'https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img'
     }[distribution_id | join(' ')]
     }}
 
@@ -108,11 +113,10 @@ volume: "{{ inventory_hostname }}.{{ volume_format }}"
 volume_capacity: |-
     {{
     {
-        'Debian 11': '10G',
-        'Debian 12': '10G',
-        'Ubuntu 20.04': '10G',
-        'Ubuntu 22.04': '10G'
-    }[distribution_id |j oin(' ')] | default('5G')
+        'CentOS 7': '5G',
+        'Debian 10': '5G',
+        'Ubuntu 18.04': '5G'
+    }[distribution_id |j oin(' ')] | default('10G')
     }}
 
 volume_cow: false
