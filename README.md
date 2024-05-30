@@ -128,7 +128,7 @@ You can also include it in a `requirements.yml` file and install it via
 ---
 collections:
   - name: jm1.libvirt
-    version: 2023.2.22
+    version: 2024.5.30
 ```
 
 ## Usage and Playbooks
