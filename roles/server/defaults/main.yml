@@ -115,7 +115,9 @@ volume_capacity: |-
     {
         'CentOS 7': '5G',
         'Debian 10': '5G',
-        'Ubuntu 18.04': '5G'
+        'Ubuntu 18.04': '5G',
+        'Red Hat Enterprise Linux ': '5G'
+
     }[distribution_id | join(' ')] | default('10G')
     }}
 

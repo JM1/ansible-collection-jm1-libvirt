@@ -131,17 +131,10 @@ def cloud_localds(volume_format,
     #       Ref.: https://salsa.debian.org/cloud-team/cloud-utils/-/blob/master/bin/cloud-localds
 
     
-
-    cloud_localds_path =  module.run_command('which cloud-localds')
-    if cloud_localds_path:
-        cmd = cloud_localds_path
-    else:
-        alt_path = 'if [ -d "/usr/local/sbin/cloud-localds" ]; then  echo "true" fi'
-        if alt_path == 'true':
-            cmd = '/usr/local/sbin/cloud-localds'
-        else:
-            return module.fail_json(msg="could not find cloud-localds on your libvirt-host machine!")
-
+    cmd = "cloud-localds"
+    check_sudo_access =  module.run_command('which cloud-localds')
+    if check_sudo_access is not "/usr/local/sbin/cloud-localds":
+        cmd = '/usr/local/sbin/cloud-localds'
     if volume_format:
         cmd += ' --disk-format "%s"' % volume_format
 
