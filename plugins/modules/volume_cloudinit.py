@@ -130,7 +130,18 @@ def cloud_localds(volume_format,
     #       because it is not available on Red Hat Enterprise Linux 8 / 9 and CentOS 8 / 9.
     #       Ref.: https://salsa.debian.org/cloud-team/cloud-utils/-/blob/master/bin/cloud-localds
 
-    cmd = 'cloud-localds'
+    
+
+    cloud_localds_path =  module.run_command('which cloud-localds')
+    if cloud_localds_path:
+        cmd = cloud_localds_path
+    else:
+        alt_path = 'if [ -d "/usr/local/sbin/cloud-localds" ]; then  echo "true" fi'
+        if alt_path == 'true':
+            cmd = '/usr/local/sbin/cloud-localds'
+        else:
+            return module.fail_json(msg="could not find cloud-localds on your libvirt-host machine!")
+
     if volume_format:
         cmd += ' --disk-format "%s"' % volume_format
 
